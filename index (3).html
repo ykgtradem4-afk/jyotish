@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ジョーティシュ | 古代インド占星術 — 無料鑑定</title>
+<meta name="description" content="5000年の叡智、ヴェーダ占星術（ジョーティシュ）で本格無料鑑定。出生ホロスコープ・今日の運勢・相性占い。27ナクシャトラ、ダシャー周期を詳細分析。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Philosopher:ital,wght@0,400;0,700;1,400&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:     #08060f;
+  --surface: #110e1c;
+  --card:    #181426;
+  --raised:  #201b30;
+  --border:  #2c2342;
+  --gold:    #c8a84a;
+  --gold2:   #f0d080;
+  --gold3:   #7a5e20;
+  --amber:   #d4783a;
+  --teal:    #2cb8a0;
+  --lilac:   #9b8abf;
+  --rose:    #c06878;
+  --text:    #ede4d4;
+  --dim:     #8a7d6a;
+  --faint:   #46403a;
+  --r: 0.75rem;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink);
+  color:var(--text);
+  font-family:'Noto Sans JP',sans-serif;
+  font-weight:300;
+  line-height:1.7;
+  overflow-x:hidden;
+  cursor:default;
+}
+
+/* ── CANVAS BG ── */
+#bgCanvas{
+  position:fixed;inset:0;
+  z-index:0;
+  pointer-events:none;
+  opacity:.45;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--ink)}
+::-webkit-scrollbar-thumb{background:var(--gold3);border-radius:2px}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(8,6,15,.88);
+  backdrop-filter:blur(16px) saturate(1.4);
+  border-bottom:1px solid var(--border);
+  height:56px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.5rem;
+}
+.nav-brand{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem;font-weight:700;
+  color:var(--gold);letter-spacing:.08em;
+  text-decoration:none;display:flex;align-items:center;gap:.5rem;
+}
+.nav-brand span{font-size:.7rem;color:var(--dim);letter-spacing:.2em;text-transform:uppercase;font-family:'Noto Sans JP',sans-serif;font-weight:300}
+.nav-tabs{display:flex;gap:.25rem}
+.tab-btn{
+  background:none;border:none;
+  font-family:'Noto Sans JP',sans-serif;font-size:.75rem;
+  color:var(--dim);letter-spacing:.06em;
+  padding:.4rem .9rem;border-radius:.5rem;
+  cursor:pointer;transition:all .2s;
+  white-space:nowrap;
+}
+.tab-btn:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.tab-btn.active{color:var(--gold);background:rgba(200,168,74,.1)}
+
+/* ── AD STRIP ── */
+.ad-strip{
+  position:relative;z-index:1;
+  background:rgba(17,14,28,.95);
+  border-bottom:1px solid var(--border);
+  padding:.45rem 1.5rem;
+  display:flex;align-items:center;justify-content:center;gap:.7rem;
+}
+.ad-strip-label{font-size:.6rem;color:var(--faint);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.ad-slot-leaderboard{
+  flex:1;max-width:728px;min-height:46px;
+  background:rgba(44,32,70,.3);
+  border:1px dashed rgba(44,32,70,.8);
+  border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.62rem;color:var(--faint);letter-spacing:.08em;
+}
+
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;
+  padding:4.5rem 1.5rem 3rem;
+  text-align:center;
+  overflow:hidden;
+}
+.hero-kicker{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:.95rem;
+  color:var(--gold3);letter-spacing:.35em;text-transform:uppercase;
+  margin-bottom:1.2rem;
+}
+.hero h1{
+  font-family:'Philosopher',serif;
+  font-size:clamp(2.2rem,5.5vw,4rem);
+  font-weight:700;line-height:1.1;
+  background:linear-gradient(160deg,var(--gold2) 0%,var(--gold) 45%,var(--amber) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:1rem;
+}
+.hero-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;color:var(--dim);
+  max-width:520px;margin:0 auto 2rem;line-height:1.85;
+}
+.hero-pills{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
+.pill{
+  font-size:.72rem;letter-spacing:.08em;
+  color:var(--dim);
+  padding:.1rem 0;
+  cursor:default;
+}
+.pill-sep{
+  font-size:.72rem;
+  color:var(--faint);
+  padding:0 .2rem;
+}
+
+/* ── MAIN TABS ── */
+.main-tabs{
+  position:relative;z-index:1;
+  display:flex;border-bottom:1px solid var(--border);
+  background:rgba(17,14,28,.7);
+  backdrop-filter:blur(8px);
+  padding:0 1.5rem;
+  gap:.25rem;
+  overflow-x:auto;
+}
+.main-tab{
+  background:none;border:none;border-bottom:2px solid transparent;
+  font-family:'Noto Sans JP',sans-serif;font-size:.82rem;
+  color:var(--dim);letter-spacing:.06em;
+  padding:.85rem 1.2rem;
+  cursor:pointer;transition:all .2s;
+  white-space:nowrap;
+  position:relative;top:1px;
+}
+.main-tab:hover{color:var(--text)}
+.main-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tab-icon{margin-right:.4rem}
+
+/* ── CONTAINER ── */
+.container{
+  max-width:960px;margin:0 auto;
+  padding:2rem 1.5rem;
+  position:relative;z-index:1;
+}
+.layout{display:grid;grid-template-columns:1fr 200px;gap:1.5rem;align-items:start}
+
+/* ── SIDEBAR ── */
+.sidebar{position:sticky;top:70px;display:flex;flex-direction:column;gap:1rem}
+.ad-sidebar-slot{
+  background:rgba(44,32,70,.25);
+  border:1px dashed rgba(44,32,70,.7);
+  border-radius:8px;padding:.5rem;
+  min-height:250px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;
+  font-size:.6rem;color:var(--faint);text-align:center;letter-spacing:.08em;
+}
+.affiliate-widget{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+}
+.aff-header{
+  background:linear-gradient(135deg,rgba(155,138,191,.15),rgba(200,168,74,.08));
+  padding:.7rem 1rem;
+  font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--lilac);
+  border-bottom:1px solid var(--border);
+}
+.aff-item{
+  padding:.75rem 1rem;
+  border-bottom:1px solid rgba(44,32,70,.4);
+  text-decoration:none;display:block;
+  transition:background .15s;
+}
+.aff-item:hover{background:rgba(255,255,255,.03)}
+.aff-item:last-child{border-bottom:none}
+.aff-name{font-size:.75rem;color:var(--text);margin-bottom:.2rem}
+.aff-desc{font-size:.65rem;color:var(--dim);line-height:1.5}
+.aff-cta{
+  display:inline-block;margin-top:.4rem;
+  font-size:.62rem;color:var(--gold);
+  letter-spacing:.06em;
+}
+
+/* ── CARD ── */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:2rem;
+  position:relative;overflow:hidden;
+  margin-bottom:1.5rem;
+}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--top-bar, linear-gradient(90deg,var(--gold),var(--amber)));
+}
+.card-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-weight:700;
+  color:var(--gold);margin-bottom:.35rem;
+}
+.card-hint{
+  font-size:.78rem;color:var(--dim);
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  margin-bottom:1.5rem;
+}
+
+/* ── FORM ── */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:1rem}
+.field{display:flex;flex-direction:column;gap:.35rem}
+label{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+input,select{
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  border-radius:7px;padding:.65rem .9rem;
+  color:var(--text);font-size:.88rem;
+  font-family:'Noto Sans JP',sans-serif;
+  transition:border-color .2s,box-shadow .2s;outline:none;
+}
+input:focus,select:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(200,168,74,.1);
+}
+select option{background:var(--card)}
+
+.btn{
+  width:100%;margin-top:1.2rem;padding:.95rem;
+  background:linear-gradient(135deg,var(--gold3),var(--gold),var(--amber));
+  border:none;border-radius:9px;
+  color:var(--ink);
+  font-family:'Philosopher',serif;font-size:.95rem;font-weight:700;
+  letter-spacing:.06em;cursor:pointer;
+  transition:opacity .2s,transform .1s;overflow:hidden;position:relative;
+}
+.btn::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);
+  transform:translateX(-100%);transition:transform .55s;
+}
+.btn:hover{opacity:.92}
+.btn:hover::after{transform:translateX(100%)}
+.btn:active{transform:scale(.99)}
+
+/* ── RESULT GRID ── */
+.rcard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-bottom:1.5rem}
+.rcard{
+  background:var(--raised);
+  border:1px solid var(--border);
+  border-radius:10px;padding:1.3rem;
+  position:relative;overflow:hidden;
+  animation:fadeUp .45s ease both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.rcard-icon{font-size:1.6rem;margin-bottom:.5rem}
+.rcard-lbl{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold3);margin-bottom:.25rem}
+.rcard-val{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;color:var(--gold2);margin-bottom:.4rem}
+.rcard-txt{font-size:.76rem;color:var(--dim);line-height:1.65;font-family:'Cormorant Garamond',serif}
+.rcard-bar{position:absolute;bottom:0;left:0;right:0;height:2px}
+
+/* ── TABLE ── */
+.tbl{width:100%;border-collapse:collapse;font-size:.8rem}
+.tbl th{
+  text-align:left;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint);padding:.5rem .7rem;border-bottom:1px solid var(--border);
+}
+.tbl td{padding:.6rem .7rem;border-bottom:1px solid rgba(44,32,70,.4);color:var(--dim)}
+.tbl tr.cur td{color:var(--gold2)}
+.tbl tr.cur td:first-child::before{content:'▶ ';color:var(--amber)}
+
+/* ── AD MID ── */
+.ad-mid{
+  background:rgba(44,32,70,.2);
+  border:1px dashed rgba(44,32,70,.6);
+  border-radius:7px;min-height:90px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.62rem;color:var(--faint);letter-spacing:.1em;text-transform:uppercase;
+  margin:1.5rem 0;
+}
+
+/* ── DAILY SECTION ── */
+.daily-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+.daily-card{
+  background:var(--raised);border:1px solid var(--border);
+  border-radius:10px;padding:1.2rem;text-align:center;
+  animation:fadeUp .4s ease both;
+}
+.daily-planet{font-size:2rem;margin-bottom:.5rem}
+.daily-name{font-family:'Cormorant Garamond',serif;font-size:.88rem;font-weight:700;color:var(--gold);margin-bottom:.4rem}
+.daily-score{
+  font-family:'Philosopher',serif;font-size:1.6rem;font-weight:700;
+  margin-bottom:.35rem;
+}
+.stars{font-size:.95rem;margin-bottom:.5rem;letter-spacing:.1em}
+.daily-txt{font-size:.75rem;color:var(--dim);line-height:1.65}
+
+/* ── COMPAT SECTION ── */
+.compat-result{
+  background:var(--raised);border:1px solid var(--border);
+  border-radius:12px;padding:1.8rem;margin-bottom:1.5rem;
+  animation:fadeUp .45s ease both;
+}
+.compat-score-ring{
+  width:110px;height:110px;margin:0 auto 1rem;
+  position:relative;display:flex;align-items:center;justify-content:center;
+}
+.compat-score-ring svg{position:absolute;inset:0;width:100%;height:100%}
+.compat-pct{font-family:'Philosopher',serif;font-size:1.8rem;font-weight:700;color:var(--gold2)}
+.compat-label{font-size:.7rem;color:var(--dim);text-align:center;margin-bottom:1.5rem}
+.compat-bars{display:flex;flex-direction:column;gap:.75rem}
+.cbar-row{display:grid;grid-template-columns:90px 1fr 36px;align-items:center;gap:.7rem}
+.cbar-name{font-size:.72rem;color:var(--dim);text-align:right}
+.cbar-track{background:rgba(255,255,255,.06);border-radius:4px;height:7px;overflow:hidden}
+.cbar-fill{height:100%;border-radius:4px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+.cbar-pct{font-size:.7rem;color:var(--gold);text-align:right}
+
+
+
+/* ── AFFILIATE SECTION ── */
+.aff-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+.aff-card{
+  background:var(--raised);border:1px solid var(--border);
+  border-radius:10px;padding:1.3rem;
+  display:flex;flex-direction:column;
+  animation:fadeUp .4s ease both;
+}
+.aff-card-badge{
+  display:inline-block;margin-bottom:.6rem;
+  font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:.2rem .6rem;border-radius:2rem;
+}
+.aff-card-name{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;color:var(--gold2);margin-bottom:.4rem}
+.aff-card-desc{font-size:.75rem;color:var(--dim);line-height:1.7;flex:1;margin-bottom:.9rem}
+.aff-card-link{
+  display:block;text-align:center;padding:.6rem;
+  background:rgba(200,168,74,.1);border:1px solid rgba(200,168,74,.25);
+  border-radius:6px;color:var(--gold);
+  font-size:.72rem;letter-spacing:.07em;
+  text-decoration:none;transition:background .2s;
+}
+.aff-card-link:hover{background:rgba(200,168,74,.18)}
+
+/* ── AMAZON SECTION ── */
+.amz-section{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:1.5rem;
+  margin-top:1.5rem;
+  position:relative;overflow:hidden;
+}
+.amz-section::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,#f90,#c8a84a);
+}
+.amz-heading{
+  font-family:'Cormorant Garamond',serif;
+  font-size:.95rem;font-weight:700;
+  color:var(--gold);margin-bottom:1rem;
+}
+.amz-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.9rem}
+.amz-card{
+  background:var(--raised);border:1px solid var(--border);
+  border-radius:9px;padding:1.1rem;
+  display:flex;flex-direction:column;
+  text-decoration:none;
+  transition:border-color .2s,background .2s;
+  animation:fadeUp .4s ease both;
+}
+.amz-card:hover{border-color:rgba(255,153,0,.4);background:rgba(255,153,0,.04)}
+.amz-icon{font-size:1.5rem;margin-bottom:.5rem}
+.amz-name{font-size:.82rem;font-weight:500;color:var(--text);margin-bottom:.35rem}
+.amz-desc{font-size:.72rem;color:var(--dim);line-height:1.6;flex:1;margin-bottom:.7rem}
+.amz-cta{font-size:.7rem;color:#f90;letter-spacing:.04em}
+.amz-note{font-size:.62rem;color:var(--faint);margin-top:.9rem;text-align:right}
+
+/* ── AMAZON SIDEBAR ── */
+.amz-sidebar{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:10px;overflow:hidden;
+}
+.amz-sidebar-header{
+  background:linear-gradient(135deg,rgba(255,153,0,.15),rgba(200,168,74,.08));
+  padding:.65rem 1rem;
+  font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;
+  color:#f90;border-bottom:1px solid var(--border);
+}
+.amz-sidebar-item{
+  padding:.75rem 1rem;border-bottom:1px solid rgba(44,32,70,.4);
+  text-decoration:none;display:block;transition:background .15s;
+}
+.amz-sidebar-item:hover{background:rgba(255,255,255,.03)}
+.amz-sidebar-item:last-child{border-bottom:none}
+.amz-sidebar-name{font-size:.75rem;color:var(--text);margin-bottom:.2rem}
+.amz-sidebar-desc{font-size:.65rem;color:var(--dim);line-height:1.5}
+.amz-sidebar-cta{display:inline-block;margin-top:.35rem;font-size:.62rem;color:#f90}
+.sec-h{
+  font-family:'Philosopher',serif;font-size:.95rem;font-weight:700;
+  color:var(--gold);margin-bottom:.9rem;
+  padding-bottom:.5rem;border-bottom:1px solid var(--border);
+}
+
+/* ── FEATURES ── */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;margin-top:2rem}
+.feat{text-align:center;padding:1.5rem 1rem}
+.feat-icon{font-size:2rem;margin-bottom:.7rem}
+.feat-name{font-family:'Cormorant Garamond',serif;font-size:.9rem;font-weight:700;color:var(--gold);margin-bottom:.4rem}
+.feat-desc{font-size:.75rem;color:var(--dim);line-height:1.7;margin-bottom:.8rem}
+.feat-link{
+  display:inline-block;font-size:.72rem;color:var(--gold);
+  letter-spacing:.05em;text-decoration:none;
+  border-bottom:1px solid rgba(200,168,74,.3);padding-bottom:.1rem;
+  transition:color .2s,border-color .2s;cursor:pointer;
+}
+.feat-link:hover{color:var(--gold2);border-bottom-color:var(--gold2)}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--surface);border-top:1px solid var(--border);
+  padding:2.5rem 1.5rem 2rem;text-align:center;position:relative;z-index:1;
+}
+.footer-logo{font-family:'Philosopher',serif;font-size:1.1rem;color:var(--gold);margin-bottom:.8rem}
+.footer-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.2rem}
+.footer-links a{font-size:.7rem;color:var(--faint);text-decoration:none;letter-spacing:.07em;text-transform:uppercase;transition:color .2s}
+.footer-links a:hover{color:var(--gold)}
+.footer-note{font-size:.7rem;color:var(--faint);line-height:1.85;max-width:480px;margin:0 auto}
+
+/* ── LOADING ── */
+#loading{
+  display:none;position:fixed;inset:0;
+  background:rgba(8,6,15,.93);z-index:999;
+  align-items:center;justify-content:center;flex-direction:column;gap:1rem;
+}
+#loading.on{display:flex}
+.spin{
+  width:70px;height:70px;
+  border:1.5px solid var(--border);border-top-color:var(--gold);
+  border-radius:50%;animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-txt{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.95rem;color:var(--gold);letter-spacing:.12em}
+
+/* ── SECTION VIS ── */
+.tab-section{display:none}
+.tab-section.active{display:block}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .main-tabs{padding:0 .75rem}
+  .container{padding:1.5rem .75rem}
+  .card{padding:1.3rem}
+}
+</style>
+</head>
+<body>
+
+<!-- Starfield Canvas -->
+<canvas id="bgCanvas"></canvas>
+
+<!-- Loading -->
+<div id="loading">
+  <div class="spin"></div>
+  <div class="load-txt" id="loadTxt">星図を計算中…</div>
+</div>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-brand" href="#">
+    ✦ Jyotiṣa
+    <span>ヴェーダ占星術</span>
+  </a>
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="scrollToTop()">鑑定</button>
+    <button class="tab-btn" onclick="showMain('daily')">今日の運勢</button>
+    <button class="tab-btn" onclick="showMain('compat')">相性</button>
+    <button class="tab-btn" onclick="showMain('aff')">おすすめ</button>
+  </div>
+</nav>
+
+<!-- AdSense Leaderboard 728x90 -->
+<div class="ad-strip">
+  <span class="ad-strip-label">広告</span>
+  <div class="ad-slot-leaderboard">
+    <!-- Google AdSense: data-ad-client="ca-pub-XXXXXXXX" data-ad-slot="XXXXXXXX" data-ad-format="horizontal" -->
+    728×90 リーダーボード広告枠（Google AdSense）
+  </div>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-kicker">Jyotiṣa — 光の学問</div>
+  <h1>古代インド占星術<br>本格無料鑑定</h1>
+  <p class="hero-sub">5000年の叡智。惑星が刻む魂の青写真を、<br>生年月日・時刻・出生地から読み解きます。</p>
+  <div class="hero-pills">
+    <span class="pill">ラーシ・チャート</span>
+    <span class="pill-sep">／</span>
+    <span class="pill">27ナクシャトラ</span>
+    <span class="pill-sep">／</span>
+    <span class="pill">ダシャー周期</span>
+    <span class="pill-sep">／</span>
+    <span class="pill">今日の運勢</span>
+    <span class="pill-sep">／</span>
+    <span class="pill">相性診断</span>
+  </div>
+</div>
+
+<!-- Main Content Tabs -->
+<div class="main-tabs">
+  <button class="main-tab active" data-tab="birth" onclick="switchTab('birth')">
+    <span class="tab-icon">🌅</span>出生ホロスコープ
+  </button>
+  <button class="main-tab" data-tab="daily" onclick="switchTab('daily')">
+    <span class="tab-icon">☀️</span>今日の運勢
+  </button>
+  <button class="main-tab" data-tab="compat" onclick="switchTab('compat')">
+    <span class="tab-icon">💫</span>相性占い
+  </button>
+  <button class="main-tab" data-tab="aff" onclick="switchTab('aff')">
+    <span class="tab-icon">✨</span>おすすめ
+  </button>
+</div>
+
+<div class="container">
+<div class="layout">
+<div class="main-col">
+
+<!-- ════ TAB: BIRTH ════ -->
+<div class="tab-section active" id="tab-birth">
+
+  <div class="card" style="--top-bar:linear-gradient(90deg,var(--gold),var(--amber))">
+    <div class="card-title">✦ 出生データを入力</div>
+    <div class="card-hint">正確な出生時刻を入力するほど、鑑定の精度が高まります。</div>
+    <div class="form-grid">
+      <div class="field" style="grid-column:1/-1">
+        <label>お名前（ニックネーム可）</label>
+        <input type="text" id="b-name" placeholder="山田 花子">
+      </div>
+      <div class="field">
+        <label>生年月日</label>
+        <input type="date" id="b-date" value="1990-04-10">
+      </div>
+      <div class="field">
+        <label>出生時刻</label>
+        <input type="time" id="b-time" value="08:30">
+      </div>
+      <div class="field">
+        <label>出生地（都市名）</label>
+        <input type="text" id="b-city" placeholder="東京">
+      </div>
+      <div class="field">
+        <label>性別</label>
+        <select id="b-gender">
+          <option>女性</option><option>男性</option><option>その他</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn" onclick="calcBirth()">✦ ホロスコープを生成する ✦</button>
+  </div>
+
+  <div id="birth-result" style="display:none">
+    <div style="text-align:center;padding:1.5rem 0 1rem">
+      <div style="font-family:'Philosopher',serif;font-size:1.4rem;color:var(--gold)">✦ あなたの星図 ✦</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--dim);font-size:1rem" id="b-name-disp"></div>
+    </div>
+
+    <!-- Chart -->
+    <div style="display:flex;justify-content:center;margin-bottom:1.5rem">
+      <canvas id="chartCanvas" width="300" height="300" style="border-radius:8px"></canvas>
+    </div>
+
+    <div class="rcard-grid" id="rcard-grid"></div>
+
+    <div class="ad-mid"><!-- AdSense 300×250 Rectangle --> 広告枠（レクタングル 300×250）</div>
+
+    <div class="card" style="--top-bar:linear-gradient(90deg,var(--teal),var(--lilac))">
+      <div class="sec-h">ジャンマ・ナクシャトラ（月宿）</div>
+      <div id="nk-detail"></div>
+    </div>
+
+    <div class="card" style="--top-bar:linear-gradient(90deg,var(--lilac),var(--rose))">
+      <div class="sec-h">ヴィムショッタリ・ダシャー周期</div>
+      <table class="tbl">
+        <thead><tr>
+          <th>惑星</th><th>開始</th><th>終了</th><th>年数</th><th>テーマ</th>
+        </tr></thead>
+        <tbody id="dasha-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Amazon書籍コーナー（出生ホロスコープ） -->
+    <div class="amz-section">
+      <div class="amz-heading">📚 ヴェーダ占星術をもっと深く知りたい方へ</div>
+      <div class="amz-grid">
+        <a class="amz-card" href="https://www.amazon.co.jp/s?k=ヴェーダ占星術&tag=XXXXXXXX-22" target="_blank" rel="noopener">
+          <div class="amz-icon">📖</div>
+          <div class="amz-name">ヴェーダ占星術 入門書</div>
+          <div class="amz-desc">初心者でもわかりやすいジョーティシュの基礎から実践まで</div>
+          <div class="amz-cta">Amazonで探す →</div>
+        </a>
+        <a class="amz-card" href="https://www.amazon.co.jp/s?k=ナクシャトラ+占星術&tag=XXXXXXXX-22" target="_blank" rel="noopener">
+          <div class="amz-icon">⭐</div>
+          <div class="amz-name">ナクシャトラ 解説書</div>
+          <div class="amz-desc">27の月宿を深く理解するための専門書</div>
+          <div class="amz-cta">Amazonで探す →</div>
+        </a>
+        <a class="amz-card" href="https://www.amazon.co.jp/s?k=インド占星術&tag=XXXXXXXX-22" target="_blank" rel="noopener">
+          <div class="amz-icon">🪐</div>
+          <div class="amz-name">インド占星術 実践書</div>
+          <div class="amz-desc">ホロスコープの読み方・惑星の解釈を詳しく解説</div>
+          <div class="amz-cta">Amazonで探す →</div>
+        </a>
+      </div>
+      <div class="amz-note">※ Amazonアソシエイトリンクを含みます</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════ TAB: DAILY ════ -->
+<div class="tab-section" id="tab-daily">
+  <div class="card" style="--top-bar:linear-gradient(90deg,var(--amber),var(--gold))">
+    <div class="card-title">☀️ 今日の運勢</div>
+    <div class="card-hint">生年月日を入力して、今日の各分野の運勢を確認しましょう。</div>
+    <div class="form-grid">
+      <div class="field">
+        <label>生年月日</label>
+        <input type="date" id="d-date" value="1990-04-10">
+      </div>
+      <div class="field">
+        <label>ラーシ（月の星座）</label>
+        <select id="d-rasi">
+          <option value="">自動計算</option>
+          <option>牡羊座（メーシャ）</option><option>牡牛座（ヴリシャバ）</option>
+          <option>双子座（ミトゥナ）</option><option>蟹座（カルカ）</option>
+          <option>獅子座（シンハ）</option><option>乙女座（カニャー）</option>
+          <option>天秤座（トゥラー）</option><option>蠍座（ヴリシュチカ）</option>
+          <option>射手座（ダヌ）</option><option>山羊座（マカラ）</option>
+          <option>水瓶座（クンバ）</option><option>魚座（ミーナ）</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn" onclick="calcDaily()">✦ 今日の運勢を見る ✦</button>
+  </div>
+
+  <div id="daily-result" style="display:none">
+    <div style="text-align:center;padding:1rem 0 1.5rem">
+      <div style="font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);margin-bottom:.3rem" id="d-date-disp"></div>
+      <div style="font-family:'Philosopher',serif;font-size:1.5rem;font-weight:700;color:var(--gold)">今日の運勢</div>
+      <div id="d-overall" style="font-size:1.5rem;margin-top:.5rem"></div>
+    </div>
+    <div class="daily-grid" id="daily-grid"></div>
+    <div class="ad-mid">広告枠（レクタングル 300×250）</div>
+
+    <div class="card" style="--top-bar:linear-gradient(90deg,var(--amber),var(--teal))">
+      <div class="sec-h">今日のアドバイス</div>
+      <div id="daily-advice" style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--dim);line-height:2;padding:.5rem 0"></div>
+    </div>
+
+    <!-- Amazon開運グッズコーナー（今日の運勢） -->
+    <div class="amz-section">
+      <div class="amz-heading">🛍️ 運気を高めるアイテム</div>
+      <div class="amz-grid">
+        <a class="amz-card" href="https://www.amazon.co.jp/s?k=パワーストーン+開運&tag=XXXXXXXX-22" target="_blank" rel="noopener">
+          <div class="amz-icon">💎</div>
+          <div class="amz-name">パワーストーン</div>
+          <div class="amz-desc">惑星対応の天然石。グラハ・ストーンで毎日の運気をサポート</div>
+          <div class="amz-cta">Amazonで探す →</div>
+        </a>
+        <a class="amz-card" href="https://www.amazon.co.jp/s?k=開運+カレンダー+占星術&tag=XXXXXXXX-22" target="_blank" rel="noopener">
+          <div class="amz-icon">📅</div>
+          <div class="amz-name">開運カレンダー</div>
+          <div class="amz-desc">吉日・凶日がひと目でわかる占星術カレンダー</div>
+          <div class="amz-cta">Amazonで探す →</div>
+        </a>
+        <a class="amz-card" href="https://www.amazon.co.jp/s?k=アロマ+瞑想+インド&tag=XXXXXXXX-22" target="_blank" rel="noopener">
+          <div class="amz-icon">🕯️</div>
+          <div class="amz-name">瞑想・アロマグッズ</div>
+          <div class="amz-desc">インド伝統のお香・アロマで心を整える毎日の習慣に</div>
+          <div class="amz-cta">Amazonで探す →</div>
+        </a>
+      </div>
+      <div class="amz-note">※ Amazonアソシエイトリンクを含みます</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════ TAB: COMPAT ════ -->
+<div class="tab-section" id="tab-compat">
+  <div class="card" style="--top-bar:linear-gradient(90deg,var(--rose),var(--lilac))">
+    <div class="card-title">💫 相性占い（クータ法）</div>
+    <div class="card-hint">ヴェーダ占星術の相性診断は36点満点のクータ法を用いります。</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+      <div>
+        <div style="font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:.8rem">あなた</div>
+        <div class="form-grid" style="grid-template-columns:1fr">
+          <div class="field"><label>お名前</label><input type="text" id="c1-name" placeholder="花子"></div>
+          <div class="field"><label>生年月日</label><input type="date" id="c1-date" value="1990-04-10"></div>
+          <div class="field"><label>出生時刻</label><input type="time" id="c1-time" value="08:30"></div>
+          <div class="field"><label>出生地</label><input type="text" id="c1-city" placeholder="東京"></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:.8rem">お相手</div>
+        <div class="form-grid" style="grid-template-columns:1fr">
+          <div class="field"><label>お名前</label><input type="text" id="c2-name" placeholder="太郎"></div>
+          <div class="field"><label>生年月日</label><input type="date" id="c2-date" value="1988-08-20"></div>
+          <div class="field"><label>出生時刻</label><input type="time" id="c2-time" value="10:00"></div>
+          <div class="field"><label>出生地</label><input type="text" id="c2-city" placeholder="大阪"></div>
+        </div>
+      </div>
+    </div>
+    <button class="btn" onclick="calcCompat()">✦ 相性を診断する ✦</button>
+  </div>
+
+  <div id="compat-result" style="display:none">
+    <div class="compat-result">
+      <div class="compat-score-ring">
+        <svg viewBox="0 0 110 110">
+          <circle cx="55" cy="55" r="48" fill="none" stroke="rgba(44,32,70,.6)" stroke-width="7"/>
+          <circle id="score-arc" cx="55" cy="55" r="48" fill="none"
+            stroke="url(#arcGrad)" stroke-width="7"
+            stroke-linecap="round"
+            stroke-dasharray="301.6" stroke-dashoffset="301.6"
+            transform="rotate(-90 55 55)"
+            style="transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1)"/>
+          <defs>
+            <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="var(--rose)"/>
+              <stop offset="100%" stop-color="var(--gold)"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="compat-pct" id="compat-pct">0</div>
+      </div>
+      <div class="compat-label" id="compat-verdict"></div>
+      <div class="compat-bars" id="compat-bars"></div>
+    </div>
+
+    <div class="card" style="--top-bar:linear-gradient(90deg,var(--rose),var(--gold))">
+      <div class="sec-h">相性の詳細分析</div>
+      <div id="compat-detail" style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--dim);line-height:2"></div>
+    </div>
+
+    <div class="ad-mid">広告枠（レクタングル 300×250）</div>
+
+    <!-- Amazon恋愛・結婚コーナー（相性占い） -->
+    <div class="amz-section">
+      <div class="amz-heading">💕 相性をさらに深く理解したい方へ</div>
+      <div class="amz-grid">
+        <a class="amz-card" href="https://www.amazon.co.jp/s?k=インド占星術+相性+結婚&tag=XXXXXXXX-22" target="_blank" rel="noopener">
+          <div class="amz-icon">💍</div>
+          <div class="amz-name">相性・結婚鑑定の本</div>
+          <div class="amz-desc">ヴェーダ占星術で読み解く結婚の縁とパートナーシップ</div>
+          <div class="amz-cta">Amazonで探す →</div>
+        </a>
+        <a class="amz-card" href="https://www.amazon.co.jp/s?k=恋愛+占星術+本&tag=XXXXXXXX-22" target="_blank" rel="noopener">
+          <div class="amz-icon">💞</div>
+          <div class="amz-name">恋愛占星術ガイド</div>
+          <div class="amz-desc">星座・惑星から読む恋愛傾向と理想のパートナー像</div>
+          <div class="amz-cta">Amazonで探す →</div>
+        </a>
+        <a class="amz-card" href="https://www.amazon.co.jp/s?k=カップル+スピリチュアル&tag=XXXXXXXX-22" target="_blank" rel="noopener">
+          <div class="amz-icon">🌹</div>
+          <div class="amz-name">カップル向けスピリチュアル</div>
+          <div class="amz-desc">二人の絆を深めるスピリチュアルな実践ガイド</div>
+          <div class="amz-cta">Amazonで探す →</div>
+        </a>
+      </div>
+      <div class="amz-note">※ Amazonアソシエイトリンクを含みます</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════ TAB: AFFILIATE ════ -->
+<div class="tab-section" id="tab-aff">
+  <div class="card" style="--top-bar:linear-gradient(90deg,var(--teal),var(--gold))">
+    <div class="card-title">✨ 占い・スピリチュアル おすすめサービス</div>
+    <div class="card-hint">編集部が厳選した、信頼できる占い・スピリチュアル関連サービスです。</div>
+  </div>
+
+  <!-- 電話・チャット占い -->
+  <div class="sec-h" style="margin-top:1.5rem">🔮 電話・チャット占い</div>
+  <div class="aff-grid">
+    <div class="aff-card">
+      <span class="aff-card-badge" style="background:rgba(200,168,74,.15);color:var(--gold);border:1px solid rgba(200,168,74,.3)">電話占い</span>
+      <div class="aff-card-name">電話占い ヴィーナス</div>
+      <div class="aff-card-desc">インド占星術専門の鑑定士が多数在籍。ヴェーダ占星術歴20年以上のベテランも。初回10分無料キャンペーン中。</div>
+      <!-- ★ A8.net審査通過後にリンクを差し替えてください -->
+      <a class="aff-card-link" href="#" target="_blank" rel="noopener">無料10分を試す →</a>
+    </div>
+    <div class="aff-card">
+      <span class="aff-card-badge" style="background:rgba(44,184,160,.12);color:var(--teal);border:1px solid rgba(44,184,160,.3)">チャット占い</span>
+      <div class="aff-card-name">チャット占い Luna</div>
+      <div class="aff-card-desc">深夜でも相談できるチャット占い。タロット×ヴェーダ占星術の複合鑑定。評価★4.8 / 5.0（3,200件）。</div>
+      <!-- ★ A8.net審査通過後にリンクを差し替えてください -->
+      <a class="aff-card-link" href="#" target="_blank" rel="noopener">鑑定師一覧を見る →</a>
+    </div>
+    <div class="aff-card">
+      <span class="aff-card-badge" style="background:rgba(155,138,191,.12);color:var(--lilac);border:1px solid rgba(155,138,191,.3)">メール鑑定</span>
+      <div class="aff-card-name">プロ鑑定師によるメール占い</div>
+      <div class="aff-card-desc">じっくり相談したい方に。72時間以内に詳細なメール鑑定が届きます。</div>
+      <!-- ★ A8.net審査通過後にリンクを差し替えてください -->
+      <a class="aff-card-link" href="#" target="_blank" rel="noopener">詳細を見る →</a>
+    </div>
+  </div>
+
+  <div class="ad-mid" style="margin:1.5rem 0">広告枠（ネイティブ広告）</div>
+
+  <!-- パワーストーン・グッズ -->
+  <div class="sec-h">💎 パワーストーン・開運グッズ</div>
+  <div class="aff-grid">
+    <div class="aff-card">
+      <span class="aff-card-badge" style="background:rgba(212,120,58,.12);color:var(--amber);border:1px solid rgba(212,120,58,.3)">Amazon</span>
+      <div class="aff-card-name">グラハ・ストーン（惑星対応）</div>
+      <div class="aff-card-desc">9惑星（ナヴァグラハ）対応の天然石アクセサリー。太陽にはルビー、月にはパール、土星にはブルーサファイア。</div>
+      <a class="aff-card-link" href="https://www.amazon.co.jp/s?k=パワーストーン+惑星+天然石&tag=XXXXXXXX-22" target="_blank" rel="noopener">Amazonで探す →</a>
+    </div>
+    <div class="aff-card">
+      <span class="aff-card-badge" style="background:rgba(212,120,58,.12);color:var(--amber);border:1px solid rgba(212,120,58,.3)">Amazon</span>
+      <div class="aff-card-name">インドお香・アロマ</div>
+      <div class="aff-card-desc">瞑想や鑑定前の空間づくりに。本場インド産のお香・アガルウッド・サンダルウッドなど。</div>
+      <a class="aff-card-link" href="https://www.amazon.co.jp/s?k=インド+お香+瞑想+アロマ&tag=XXXXXXXX-22" target="_blank" rel="noopener">Amazonで探す →</a>
+    </div>
+    <div class="aff-card">
+      <span class="aff-card-badge" style="background:rgba(212,120,58,.12);color:var(--amber);border:1px solid rgba(212,120,58,.3)">Amazon</span>
+      <div class="aff-card-name">タロット・オラクルカード</div>
+      <div class="aff-card-desc">占星術と合わせて使えるタロット・インスピレーションカード。初心者向けガイドブック付きも。</div>
+      <a class="aff-card-link" href="https://www.amazon.co.jp/s?k=タロットカード+オラクル&tag=XXXXXXXX-22" target="_blank" rel="noopener">Amazonで探す →</a>
+    </div>
+  </div>
+
+  <!-- 書籍・学習 -->
+  <div class="sec-h" style="margin-top:1.5rem">📚 ヴェーダ占星術を学ぶ</div>
+  <div class="aff-grid">
+    <div class="aff-card">
+      <span class="aff-card-badge" style="background:rgba(200,168,74,.12);color:var(--gold);border:1px solid rgba(200,168,74,.3)">入門</span>
+      <div class="aff-card-name">ヴェーダ占星術 入門書</div>
+      <div class="aff-card-desc">初心者でもわかりやすい、ジョーティシュの基礎から実践まで網羅した一冊。</div>
+      <a class="aff-card-link" href="https://www.amazon.co.jp/s?k=ヴェーダ占星術+入門&tag=XXXXXXXX-22" target="_blank" rel="noopener">Amazonで見る →</a>
+    </div>
+    <div class="aff-card">
+      <span class="aff-card-badge" style="background:rgba(200,168,74,.12);color:var(--gold);border:1px solid rgba(200,168,74,.3)">中級</span>
+      <div class="aff-card-name">ナクシャトラ 完全解説書</div>
+      <div class="aff-card-desc">27の月宿それぞれの特性・相性・人生テーマを深く掘り下げた専門書。</div>
+      <a class="aff-card-link" href="https://www.amazon.co.jp/s?k=ナクシャトラ+占星術+本&tag=XXXXXXXX-22" target="_blank" rel="noopener">Amazonで見る →</a>
+    </div>
+    <div class="aff-card">
+      <span class="aff-card-badge" style="background:rgba(192,104,120,.12);color:var(--rose);border:1px solid rgba(192,104,120,.3)">講座</span>
+      <div class="aff-card-name">オンライン占星術講座</div>
+      <div class="aff-card-desc">自宅で学べるヴェーダ占星術の通信講座。初心者からプロ鑑定士レベルまで。</div>
+      <!-- ★ A8.net審査通過後にリンクを差し替えてください -->
+      <a class="aff-card-link" href="#" target="_blank" rel="noopener">講座を見る →</a>
+    </div>
+  </div>
+
+  <div class="amz-note" style="margin-top:1rem">※ Amazonリンクはアソシエイトリンクを含みます。A8.netリンクはアフィリエイト広告です。</div>
+</div>
+
+
+<!-- ════ FEATURES (always visible below tabs) ════ -->
+<div id="feat-section" style="margin-top:2rem">
+  <div style="text-align:center;padding:2rem 0 1rem">
+    <div style="font-family:'Philosopher',serif;font-size:1.2rem;color:var(--gold)">ジョーティシュとは</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--dim);font-size:.92rem">「光の学問」— 古代インドの惑星科学</div>
+  </div>
+  <div class="feat-grid">
+    <div class="feat">
+      <div class="feat-icon">🪐</div>
+      <div class="feat-name">9惑星（ナヴァグラハ）</div>
+      <div class="feat-desc">太陽・月・火星・水星・木星・金星・土星・ラーフ・ケートゥ。9天体があなたの性格と運命を形成。</div>
+      <a class="feat-link" onclick="switchTab('birth');window.scrollTo({top:0,behavior:'smooth'})">出生ホロスコープを試す →</a>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">⭐</div>
+      <div class="feat-name">27ナクシャトラ</div>
+      <div class="feat-desc">月の軌道を27分割した「月宿」。西洋占星術にはない超精密な魂の性質を示します。</div>
+      <a class="feat-link" onclick="switchTab('birth');window.scrollTo({top:0,behavior:'smooth'})">出生鑑定で詳しく見る →</a>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">🔄</div>
+      <div class="feat-name">ダシャー周期</div>
+      <div class="feat-desc">120年にわたる惑星の支配周期。今あなたがどの時代にいるかを知り、人生の波を活かす。</div>
+      <a class="feat-link" onclick="switchTab('daily');window.scrollTo({top:0,behavior:'smooth'})">今日の運勢を見る →</a>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">💞</div>
+      <div class="feat-name">クータ相性法</div>
+      <div class="feat-desc">36点満点の相性診断。ナクシャトラの8つの要素で結婚・恋愛の調和度を測定。</div>
+      <a class="feat-link" onclick="switchTab('compat');window.scrollTo({top:0,behavior:'smooth'})">相性を診断する →</a>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main-col -->
+
+<!-- ════ SIDEBAR ════ -->
+<div class="sidebar">
+  <!-- AdSense 160x600 Wide Skyscraper -->
+  <div class="ad-sidebar-slot">
+    <!-- Google AdSense wide skyscraper -->
+    160×600<br>ワイドスカイスクレイパー<br>（AdSense）
+  </div>
+
+  <!-- AdSense 300x250 -->
+  <div class="ad-sidebar-slot" style="min-height:200px">
+    300×250<br>レクタングル広告<br>（AdSense）
+  </div>
+
+  <!-- Amazon サイドバーウィジェット -->
+  <div class="amz-sidebar">
+    <div class="amz-sidebar-header">📚 おすすめ書籍</div>
+    <a class="amz-sidebar-item" href="https://www.amazon.co.jp/s?k=ヴェーダ占星術&tag=XXXXXXXX-22" target="_blank" rel="noopener">
+      <div class="amz-sidebar-name">ヴェーダ占星術 入門</div>
+      <div class="amz-sidebar-desc">ジョーティシュの基礎から実践まで</div>
+      <div class="amz-sidebar-cta">Amazonで見る →</div>
+    </a>
+    <a class="amz-sidebar-item" href="https://www.amazon.co.jp/s?k=パワーストーン+天然石&tag=XXXXXXXX-22" target="_blank" rel="noopener">
+      <div class="amz-sidebar-name">パワーストーン</div>
+      <div class="amz-sidebar-desc">惑星対応の天然石アクセサリー</div>
+      <div class="amz-sidebar-cta">Amazonで見る →</div>
+    </a>
+    <a class="amz-sidebar-item" href="https://www.amazon.co.jp/s?k=タロットカード&tag=XXXXXXXX-22" target="_blank" rel="noopener">
+      <div class="amz-sidebar-name">タロット・オラクルカード</div>
+      <div class="amz-sidebar-desc">占星術と合わせて使えるカード</div>
+      <div class="amz-sidebar-cta">Amazonで見る →</div>
+    </a>
+  </div>
+</div>
+
+</div><!-- /layout -->
+</div><!-- /container -->
+
+<!-- Footer Ad -->
+<div style="padding:.5rem 1.5rem 1rem;position:relative;z-index:1;text-align:center">
+  <div class="ad-mid" style="max-width:728px;margin:0 auto">広告枠（フッター 728×90）</div>
+</div>
+
+<footer>
+  <div class="footer-logo">✦ Jyotiṣa — ジョーティシュ占星術</div>
+  <div class="footer-links">
+    <a href="#">利用規約</a>
+    <a href="#">プライバシーポリシー</a>
+    <a href="#">広告について</a>
+    <a href="#">お問い合わせ</a>
+    <a href="#">鑑定士紹介</a>
+    <a href="#">ヴェーダ占星術を学ぶ</a>
+  </div>
+  <div class="footer-note">
+    本サイトの占星術計算はデモ用アルゴリズムによるものです。<br>
+    占い結果は参考情報であり、専門的アドバイスの代替にはなりません。<br>
+    本サイトはGoogle AdSenseおよびアフィリエイト広告を利用しています。
+  </div>
+</footer>
+
+<script>
+/* ══════════════════════════════════════
+   STARFIELD CANVAS
+══════════════════════════════════════ */
+(function(){
+  const cv=document.getElementById('bgCanvas');
+  const ctx=cv.getContext('2d');
+  let W,H,stars=[];
+  function resize(){
+    W=cv.width=window.innerWidth;
+    H=cv.height=window.innerHeight;
+  }
+  function initStars(){
+    stars=[];
+    for(let i=0;i<180;i++){
+      stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+.3,a:Math.random(),da:(Math.random()-.5)*.003});
+    }
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(const s of stars){
+      s.a=Math.max(.1,Math.min(1,s.a+s.da));
+      if(s.a<=.1||s.a>=1)s.da*=-1;
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,248,210,${s.a})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  resize();initStars();draw();
+  window.addEventListener('resize',()=>{resize();initStars()});
+})();
+
+/* ══════════════════════════════════════
+   TAB SWITCHING
+══════════════════════════════════════ */
+function switchTab(id){
+  document.querySelectorAll('.tab-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.main-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  document.querySelector(`[data-tab="${id}"]`).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showMain(id){
+  switchTab(id);
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+}
+function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'})}
+
+/* ══════════════════════════════════════
+   ASTRO DATA
+══════════════════════════════════════ */
+const RASIS=['牡羊座（メーシャ）','牡牛座（ヴリシャバ）','双子座（ミトゥナ）','蟹座（カルカ）','獅子座（シンハ）','乙女座（カニャー）','天秤座（トゥラー）','蠍座（ヴリシュチカ）','射手座（ダヌ）','山羊座（マカラ）','水瓶座（クンバ）','魚座（ミーナ）'];
+const RASI_S=['牡羊','牡牛','双子','蟹','獅子','乙女','天秤','蠍','射手','山羊','水瓶','魚'];
+const NK=[
+  {n:'アシュヴィニー',r:'ケートゥ',d:'双馬神',s:'馬の頭',q:'直感的で行動力に溢れる治癒者。新しい始まりを告げる星宿。'},
+  {n:'バラニー',r:'金星',d:'ヤマ',s:'膣',q:'創造と破壊の循環を生きる。激しい情熱と芸術的才能を持つ。'},
+  {n:'クリッティカー',r:'太陽',d:'アグニ',s:'剃刀',q:'鋭敏な知性と批判的思考。清浄と保護の炎を宿す。'},
+  {n:'ローヒニー',r:'月',d:'ブラフマー',s:'荷車',q:'創造性と豊かさの星。強い美的センスで物質的繁栄を引き寄せる。'},
+  {n:'ムリガシラー',r:'火星',d:'ソーマ',s:'鹿の頭',q:'永遠の探求者。美と知識への渇望を持つ優れたコミュニケーター。'},
+  {n:'アールドラー',r:'ラーフ',d:'ルドラ',s:'涙',q:'嵐の後に変革をもたらす。感情の浄化を通じて成長する魂。'},
+  {n:'プナルヴァス',r:'木星',d:'アディティ',s:'弓矢',q:'再生と復活の力。楽観主義と精神的な豊かさに満ちている。'},
+  {n:'プシャ',r:'土星',d:'ブリハスパティ',s:'蓮',q:'養育と保護の星。高い精神性と愛の奉仕を体現する。'},
+  {n:'アーシュレーシャー',r:'水星',d:'サルパ',s:'蛇',q:'神秘的な知恵と変容力。潜在意識との深いつながりを持つ。'},
+  {n:'マガー',r:'ケートゥ',d:'ピトリ',s:'玉座',q:'王権と権威の星。先祖からの祝福を受けた天性のリーダー。'},
+  {n:'プールヴァ・パルグニー',r:'金星',d:'バガ',s:'寝台前部',q:'愛・美・芸術の享受者。創造的な自己表現を生きる。'},
+  {n:'ウッタラ・パルグニー',r:'太陽',d:'アリャマン',s:'寝台後部',q:'友情と契約の星。高い誠実さで社会的関係を築く。'},
+  {n:'ハスタ',r:'月',d:'サヴィトリ',s:'手',q:'器用さと技術の星。手仕事や癒しの才能で世界に貢献。'},
+  {n:'チトラー',r:'火星',d:'トヴァシュトリ',s:'真珠',q:'美と秩序の創造者。卓越した審美眼と光り輝く魅力。'},
+  {n:'スヴァーティ',r:'ラーフ',d:'ヴァーユ',s:'剣',q:'独立と自由を求める魂。風のような柔軟性と適応力。'},
+  {n:'ヴィシャーカー',r:'木星',d:'インドラ・アグニ',s:'凱旋門',q:'目標への激しい執着と達成欲。変容を通じて精神的成長を遂げる。'},
+  {n:'アヌラーダー',r:'土星',d:'ミトラ',s:'蓮',q:'友情・協力・献身の星。組織を一つにまとめる愛の力。'},
+  {n:'ジェーシュター',r:'水星',d:'インドラ',s:'円形のお守り',q:'最年長の守護者。困難な状況でも皆を守る強いリーダー。'},
+  {n:'ムーラ',r:'ケートゥ',d:'ニリリティ',s:'根',q:'根本への回帰。哲学的な深さと破壊から生まれる真の変容。'},
+  {n:'プールヴァーシャーダー',r:'金星',d:'アパス',s:'象牙',q:'無敵の意志と征服への渇望。清浄と浄化の優雅な強さ。'},
+  {n:'ウッタラーシャーダー',r:'太陽',d:'ヴィシュヴェーデーヴァ',s:'象牙',q:'究極の勝利の星。時間をかけて確実に成功を収める不敗の意志力。'},
+  {n:'シュラヴァナ',r:'月',d:'ヴィシュヌ',s:'三足',q:'聴くことと学びの星。知識を世界に伝える伝道師。'},
+  {n:'ダニシュター',r:'火星',d:'ヴァス',s:'太鼓',q:'富と名声の星。音楽と律動の才能でグループの中に輝く。'},
+  {n:'シャタビシャー',r:'ラーフ',d:'ヴァルナ',s:'千の花',q:'神秘の癒し手。孤独の中に力を見出し宇宙の秘密を解く。'},
+  {n:'プールヴァー・バードラパダー',r:'木星',d:'アジャエーカパーダ',s:'片足の男',q:'激しい情熱と精神的な炎。世俗を超えた高い理想のために生きる。'},
+  {n:'ウッタラー・バードラパダー',r:'土星',d:'アヒル・ブドニヤ',s:'蛇',q:'深淵の知恵。静寂の中に宿る力であらゆる苦難を乗り越える。'},
+  {n:'レーヴァティー',r:'水星',d:'プーシャン',s:'太鼓',q:'魂の旅の完成。神聖な愛と慈悲を体現する導きの星。'}
+];
+const DASHA_ORDER=['太陽','月','火星','ラーフ','木星','土星','水星','ケートゥ','金星'];
+const DASHA_YRS={太陽:6,月:10,火星:7,ラーフ:18,木星:16,土星:19,水星:17,ケートゥ:7,金星:20};
+const THEMES={太陽:'自我・権威・父・健康・キャリア',月:'心・母・感情・家庭・直感',火星:'行動・競争・エネルギー・土地',ラーフ:'欲望・外国・テクノロジー・変革',木星:'成長・宗教・教育・幸運',土星:'カルマ・忍耐・構造・長老',水星:'知性・商業・コミュニケーション',ケートゥ:'解脱・精神性・孤独・神秘',金星:'愛・美・芸術・財産・婚姻'};
+const ICONS=['☀️','🌙','♂️','☿','♃','♀','♄','☊','☋'];
+
+/* ── MATH ── */
+function jd(y,m,d){if(m<=2){y--;m+=12}const A=Math.floor(y/100),B=2-A+Math.floor(A/4);return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5}
+function ayan(j){return 23.85+0.0001396*((j-2451545)/36525*36525-57.24)}
+function sid(lon,j){return((lon-ayan(j))%360+360)%360}
+function sunL(j){const T=(j-2451545)/36525,L=280.46646+36000.76983*T,M=(357.52911+35999.05029*T)*Math.PI/180;return((L+(1.914602-.004817*T)*Math.sin(M)+.019993*Math.sin(2*M))%360+360)%360}
+function moonL(j){const T=(j-2451545)/36525;let L=218.3164477+481267.88123421*T;const D=(297.8501921+445267.1114034*T)*Math.PI/180,M=(357.5291092+35999.0502909*T)*Math.PI/180,Mp=(134.9633964+477198.8675055*T)*Math.PI/180;L+=-1.274*Math.sin(2*D-Mp)+.6583*Math.sin(2*D)+.2135*Math.sin(Mp)-.1851*Math.sin(M);return((L%360)+360)%360}
+function rasi(lon){return Math.floor(lon/30)}
+function nkIdx(lon){return Math.floor(lon/(360/27))}
+function pada(lon){return Math.floor((lon%(360/27))/(360/108))+1}
+function planets(j){
+  const T=(j-2451545)/36525;
+  return{
+    sun:sid(sunL(j),j),
+    moon:sid(moonL(j),j),
+    mars:sid(((355.433275+19140.2993313*T)%360+360)%360,j),
+    merc:sid(((252.250906+149472.6746358*T)%360+360)%360,j),
+    jup:sid(((34.351519+3034.9056606*T)%360+360)%360,j),
+    ven:sid(((181.979801+58517.8156760*T)%360+360)%360,j),
+    sat:sid(((50.077444+1222.1138488*T)%360+360)%360,j),
+    rahu:sid(((125.044522-1934.1362608*T)%360+360)%360,j),
+    ketu:sid(((305.044522-1934.1362608*T)%360+360)%360,j)
+  }
+}
+function ascendant(j,lat,lon){
+  const T=(j-2451545)/36525,GMST=((280.46061837+360.98564736629*(j-2451545)+.000387933*T*T)%360+360)%360;
+  const LST=((GMST+lon)%360+360)%360,eps=(23.439291-.0130042*T)*Math.PI/180;
+  const latR=lat*Math.PI/180,lstR=LST*Math.PI/180;
+  let a=Math.atan2(Math.cos(lstR),-(Math.sin(lstR)*Math.cos(eps)+Math.tan(latR)*Math.sin(eps)));
+  return sid(((a*180/Math.PI)%360+360)%360,j);
+}
+function cityXY(c){
+  const m={tokyo:[35.69,139.69],大阪:[34.69,135.5],京都:[35.01,135.76],名古屋:[35.18,136.91],福岡:[33.59,130.4],札幌:[43.06,141.35],横浜:[35.44,139.64],仙台:[38.26,140.87],神戸:[34.69,135.19],広島:[34.39,132.45],osaka:[34.69,135.5],kyoto:[35.01,135.76],mumbai:[19.08,72.88],delhi:[28.61,77.2],london:[51.51,-.13],'new york':[40.71,-74.01],paris:[48.85,2.35],sydney:[-33.87,151.21]};
+  const k=c.toLowerCase().replace(/[　 ]/g,'');
+  for(const[n,v]of Object.entries(m))if(k.includes(n)||n.includes(k))return v;
+  return[35.69,139.69];
+}
+function dasha(moonSid,birthDate){
+  const nk=nkIdx(moonSid),frac=(moonSid%(360/27))/(360/27);
+  const rulers=['ケートゥ','金星','太陽','月','火星','ラーフ','木星','土星','水星'];
+  const br=rulers[nk%9],si=DASHA_ORDER.indexOf(br);
+  const fy=DASHA_YRS[br],el=frac*fy,rem=fy-el;
+  const res=[],bd=new Date(birthDate);
+  let cur=new Date(bd);
+  cur.setFullYear(cur.getFullYear()+Math.floor(el));
+  cur.setMonth(cur.getMonth()+Math.round((el%1)*12));
+  for(let i=0;i<9;i++){
+    const idx=(si+i)%9,pl=DASHA_ORDER[idx],yrs=i===0?rem:DASHA_YRS[pl];
+    const s=new Date(cur),e=new Date(cur);
+    e.setFullYear(e.getFullYear()+Math.floor(yrs));
+    e.setMonth(e.getMonth()+Math.round((yrs%1)*12));
+    res.push({pl,s,e,yrs:i===0?rem:DASHA_YRS[pl]});
+    cur=new Date(e);
+  }
+  return res;
+}
+
+/* ── CHART DRAW ── */
+function drawChart(canvas,pos,ascSign){
+  const W=300,H=300,ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#181426';ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='#c8a84a';ctx.lineWidth=1.5;ctx.strokeRect(3,3,W-6,H-6);
+  ctx.strokeStyle='#2c2342';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(3,3);ctx.lineTo(W-3,H-3);ctx.moveTo(W-3,3);ctx.lineTo(3,H-3);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(W/2,3);ctx.lineTo(W/2,H-3);ctx.moveTo(3,H/2);ctx.lineTo(W-3,H/2);ctx.stroke();
+  const keys=['sun','moon','mars','merc','jup','ven','sat','rahu','ketu'];
+  const ha=Array(12).fill(null).map(()=>[]);
+  for(let i=0;i<keys.length;i++){const h=((rasi(pos[keys[i]])-ascSign+12)%12);ha[h].push(ICONS[i]);}
+  const cc=[
+    {x:W/2,y:H*.17},{x:W*.82,y:H*.13},{x:W*.86,y:H*.42},{x:W*.82,y:H*.82},
+    {x:W/2,y:H*.83},{x:W*.18,y:H*.82},{x:W*.14,y:H*.42},{x:W*.18,y:H*.17},
+    {x:W/2,y:H*.35},{x:W/2,y:H*.5},{x:W*.65,y:H*.35},{x:W*.35,y:H*.35}
+  ];
+  for(let h=0;h<12;h++){
+    const sg=(ascSign+h)%12,c=cc[h];
+    ctx.font=`${h===0?'bold ':''}9px "Noto Sans JP"`;
+    ctx.fillStyle=h===0?'#c8a84a':'#8a7d6a';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(RASI_S[sg],c.x,c.y);
+    if(ha[h].length){ctx.font='11px serif';ctx.fillStyle='#f0d080';ctx.fillText(ha[h].join(''),c.x,c.y+14);}
+  }
+  ctx.font='bold 7px "Noto Sans JP"';ctx.fillStyle='#c8a84a';ctx.fillText('Lagna',W/2,H*.09);
+}
+
+/* ══════════════════════════════════════
+   BIRTH CALC
+══════════════════════════════════════ */
+/* ══════════════════════════════════════
+   12星座 × 惑星の個別解釈データ
+══════════════════════════════════════ */
+const RASI_INTERP = {
+  // ラグナ（アセンダント）の解釈
+  lagna: [
+    '牡羊座ラグナは行動力と開拓精神の象徴。火星が支配するあなたは生まれながらのリーダーで、新しいことへの挑戦を恐れません。直感的に動き、エネルギーに溢れた人生を歩みます。体力と情熱が武器ですが、衝動的になりすぎないよう注意を。',
+    '牡牛座ラグナは安定・美・豊かさの象徴。金星が支配するあなたは感覚的な美しさを愛し、物質的な快適さを大切にします。粘り強く着実に積み上げる才能があり、芸術・食・自然に喜びを見出します。変化を嫌う面があるので、柔軟性を意識して。',
+    '双子座ラグナは知性・コミュニケーション・多才さの象徴。水星が支配するあなたは好奇心旺盛で、多くの分野に興味を持ちます。言葉の才能があり、人との繋がりを通じて成長します。飽きっぽさが課題なので、一つのことを深める意識を持って。',
+    '蟹座ラグナは感受性・家庭・保護の象徴。月が支配するあなたは豊かな感情と直感を持ち、人を大切にする優しさがあります。家族や身近な人への愛情が深く、安心できる空間を大切にします。感情の波に流されやすい面があるので注意を。',
+    '獅子座ラグナは創造性・誇り・輝きの象徴。太陽が支配するあなたは生まれながらの存在感を持ち、人の中心に立つカリスマ性があります。創造的な表現と承認欲求が人生を動かす原動力。プライドが高すぎると孤立するので謙虚さも大切に。',
+    '乙女座ラグナは分析力・完璧主義・奉仕の象徴。水星が支配するあなたは細部への注意力と批判的思考に優れます。実用的で几帳面、人の役に立つことに喜びを感じます。完璧を求めすぎてストレスを溜めがちなので、「十分良い」を受け入れる練習を。',
+    '天秤座ラグナは調和・美・公正さの象徴。金星が支配するあなたは社交的で美的センスに優れ、人間関係を大切にします。バランス感覚が高く、衝突を避け和を保とうとします。優柔不断になりやすいので、自分の意見を持つ勇気を育てましょう。',
+    '蠍座ラグナは深さ・変容・探究心の象徴。火星が支配するあなたは物事の表面を超えた深い真実を求めます。強烈な感情と意志力を持ち、人生を通じた大きな変容を体験します。執着や嫉妬が課題。手放すことで真の力が開花します。',
+    '射手座ラグナは哲学・自由・精神的探求の象徴。木星が支配するあなたは真理を求める旅人です。楽観的で開放的、遠くの地や異文化への憧れがあります。理想主義が強く、現実的な細部を見落としがち。地に足をつけた実践も大切にして。',
+    '山羊座ラグナは規律・野心・着実な上昇の象徴。土星が支配するあなたは責任感が強く、長期的な視野で着実に目標を達成します。苦労を厭わない粘り強さが最大の武器。若い頃は苦労が多くても、年を重ねるごとに輝きを増す人生です。',
+    '水瓶座ラグナは革新・人道主義・独自性の象徴。土星が支配するあなたは時代の先を行く思考を持ち、社会や集団への貢献に使命感を感じます。個性的で型にはまらない生き方が魅力。人と深い絆を結ぶことへの苦手意識を克服すると人生が豊かに。',
+    '魚座ラグナは霊性・共感・夢想の象徴。木星が支配するあなたは豊かな想像力と深い共感力を持ちます。芸術・スピリチュアル・癒しの分野で才能を発揮。境界線が曖昧になりがちなので、自分軸を持つことが人生の課題であり鍵です。'
+  ],
+  // 太陽星座の解釈
+  sun: [
+    '牡羊座の太陽は自己主張と開拓のエネルギー。パイオニア精神が強く、誰も進んでいない道を切り開く力があります。リーダーとして周囲を引っ張る使命を持ちます。',
+    '牡牛座の太陽は忍耐と豊かさのエネルギー。美しいものを創り出し、守り続ける力があります。物質的・精神的な安定を通じて魂の目的を果たします。',
+    '双子座の太陽は知識と伝達のエネルギー。情報を集め、繋ぎ合わせて広める役割があります。言葉と思考を使って世界に貢献する使命を持ちます。',
+    '蟹座の太陽は養育と保護のエネルギー。人の心を育て、安心できる場所を作る才能があります。感情的なつながりを通じて魂の目的を果たします。',
+    '獅子座の太陽は表現と創造のエネルギー。自分らしく輝き、周囲にインスピレーションを与える使命を持ちます。創造的な表現が魂の喜びです。',
+    '乙女座の太陽は奉仕と完成のエネルギー。細部にこだわり、物事を磨き上げる才能があります。誰かの役に立つことに深い満足感を覚えます。',
+    '天秤座の太陽は調和と正義のエネルギー。美と均衡を世界にもたらす使命があります。人間関係と芸術を通じて魂の目的を果たします。',
+    '蠍座の太陽は変容と深化のエネルギー。物事の本質に迫り、古いものを手放して再生する力があります。深い洞察で真実を明らかにする使命を持ちます。',
+    '射手座の太陽は探求と拡張のエネルギー。真理を求めて旅し、知恵を広める使命があります。楽観と信念が人生を動かす原動力です。',
+    '山羊座の太陽は構造と達成のエネルギー。長期的な目標に向かって着実に登る力があります。社会に有形の貢献をすることが魂の喜びです。',
+    '水瓶座の太陽は革新と解放のエネルギー。古い制限を打ち破り、新しい未来を切り開く使命があります。集団の進化に貢献することが喜びです。',
+    '魚座の太陽は統合と超越のエネルギー。すべてのものへの共感と愛が魂の本質です。芸術・癒し・精神的な奉仕を通じて使命を果たします。'
+  ],
+  // 月星座の解釈
+  moon: [
+    '牡羊座の月は感情的に情熱的で衝動的。感情の波が激しく速く、瞬発的な怒りや熱意を感じやすいです。刺激と新しい体験が心の活力になります。',
+    '牡牛座の月は感情的に安定していて穏やか。心の安らぎには快適さ・美・日常のリズムが必要です。変化より安心できる環境を好みます。',
+    '双子座の月は感情的に知的で多様。気分の変化が早く、コミュニケーションや学習によって心がリフレッシュされます。感情を言語化する力があります。',
+    '蟹座の月は感情的に豊かで敏感。直感力が高く、家族や身近な人への深い愛情を持ちます。安心できる場所と温かいつながりが心の支えです。',
+    '獅子座の月は感情的に表現豊かで温かい。愛情と承認が必要で、創造的な表現が感情のはけ口になります。劇的な感情表現が特徴です。',
+    '乙女座の月は感情的に分析的で実務的。心配性で細かいことが気になりがちですが、誰かのお役に立てることで心が落ち着きます。',
+    '天秤座の月は感情的に調和を求める。対立やトラブルを嫌い、美しい環境と穏やかな人間関係の中で心が安らぎます。優柔不断が課題。',
+    '蠍座の月は感情的に深く強烈。感情を内に秘め、表面には出しませんが、内側では激しい感情の嵐が起きています。変容の中で心が成長します。',
+    '射手座の月は感情的に自由で楽観的。縛られることを嫌い、旅や学びや哲学に心の解放を求めます。感情的な自由が幸福の鍵です。',
+    '山羊座の月は感情的に自制心が強い。感情を抑えがちで、責任感と義務感から行動することが多いです。感情を表現する練習が成長につながります。',
+    '水瓶座の月は感情的に客観的で独立的。感情を知的に分析しがち。集団への帰属意識と個人の自由のバランスが課題です。',
+    '魚座の月は感情的に共感力が高く境界が曖昧。他者の感情をスポンジのように吸収します。アートや自然、瞑想が感情の浄化に役立ちます。'
+  ],
+  // 木星の解釈
+  jupiter: [
+    '牡羊座の木星は新しい挑戦と行動から幸運が訪れます。最初の一歩を踏み出す勇気が豊かさを引き寄せます。',
+    '牡牛座の木星は忍耐強い努力と物質的な豊かさへの感謝から幸運が訪れます。芸術・自然・五感の喜びが幸福の源です。',
+    '双子座の木星は知識の探求とコミュニケーションから幸運が訪れます。多くを学び、共有することで人生が豊かになります。',
+    '蟹座の木星は家族・故郷・感情的なつながりから幸運が訪れます。人を育て守ることが豊かさをもたらします。',
+    '獅子座の木星は創造的な表現と自己開示から幸運が訪れます。自分らしく輝くことで周囲も豊かにします。',
+    '乙女座の木星は細やかな奉仕と実用的なスキルから幸運が訪れます。健康管理と日々の習慣の積み重ねが豊かさを生みます。',
+    '天秤座の木星はパートナーシップと公正さから幸運が訪れます。良い人間関係を築くことが人生の豊かさの鍵です。',
+    '蠍座の木星は深い変容と精神的な探求から幸運が訪れます。秘められた才能を掘り起こすことで豊かさが開花します。',
+    '射手座の木星は木星が自らの支配星座に位置する最強の配置。哲学・旅・教育・精神的な成長が幸運の源です。',
+    '山羊座の木星は規律ある努力と責任感から幸運が訪れます。社会的な貢献と長期的な目標達成が豊かさをもたらします。',
+    '水瓶座の木星は革新的なアイデアと人道的な活動から幸運が訪れます。コミュニティへの貢献が人生を豊かにします。',
+    '魚座の木星は精神性と慈悲心から幸運が訪れます。芸術・癒し・スピリチュアルな実践が豊かさの扉を開きます。'
+  ],
+  // 土星の解釈
+  saturn: [
+    '牡羊座の土星は衝動を抑え、行動に忍耐を学ぶカルマがあります。焦らず計画的に進むことで大きな成果を得ます。',
+    '牡牛座の土星は物質的な安定を自力で築くカルマがあります。依存せず、コツコツと積み上げることで真の豊かさを手にします。',
+    '双子座の土星はコミュニケーションと学習に規律を学ぶカルマがあります。深く学び続けることで知性が権威となります。',
+    '蟹座の土星は感情と家族関係に試練があります。自立した感情の在り方を学ぶことで、深い内側の強さが育まれます。',
+    '獅子座の土星は自己表現と承認欲求に関するカルマがあります。他者の評価に左右されず、内側から輝く力を育てます。',
+    '乙女座の土星は完璧主義と奉仕の在り方に関するカルマがあります。自分への批判を手放し、十分な自分を認めることが課題です。',
+    '天秤座の土星は人間関係と公正さに関するカルマがあります。依存でも孤立でもない、成熟した対等な関係を築く学びがあります。',
+    '蠍座の土星は深い感情の変容と手放しに関するカルマがあります。執着を手放し、変容を受け入れることで真の力が開花します。',
+    '射手座の土星は信念と哲学の在り方に関するカルマがあります。盲目的な信念ではなく、経験に基づいた知恵を育てることが使命です。',
+    '山羊座の土星は土星が自らの支配星座に位置する最強の配置。強い責任感と自律心で社会的な成功を収める力があります。',
+    '水瓶座の土星も土星の支配星座。改革と規律のバランスを学びます。社会の構造を理解しながら変化を促す力があります。',
+    '魚座の土星は境界線と現実認識に関するカルマがあります。夢と現実のバランスを保ちながら、精神的な強さを育てます。'
+  ]
+};
+
+function calcBirth(){
+  const name=document.getElementById('b-name').value||'あなた';
+  const bd=document.getElementById('b-date').value;
+  const bt=document.getElementById('b-time').value||'06:00';
+  const city=document.getElementById('b-city').value||'東京';
+  if(!bd){alert('生年月日を入力してください');return}
+  loading(true,'ホロスコープを計算中…');
+  setTimeout(()=>{
+    try{
+      const[y,m,d]=bd.split('-').map(Number);
+      const[hh,mm]=bt.split(':').map(Number);
+      const[lat,lon]=cityXY(city);
+      const j=jd(y,m,d)+(hh+mm/60)/24-9/24;
+      const pos=planets(j);
+      const asc=ascendant(j,lat,lon);
+      const ascSign=rasi(asc),moonSign=rasi(pos.moon),sunSign=rasi(pos.sun);
+      const nk=nkIdx(pos.moon),nkd=NK[nk],pd=pada(pos.moon);
+      const das=dasha(pos.moon,bd);
+      const today=new Date();
+
+      document.getElementById('b-name-disp').textContent=`${name} 様の星図`;
+      drawChart(document.getElementById('chartCanvas'),pos,ascSign);
+
+      // rcards
+      const cards=[
+        {i:'🌅',l:'ラグナ（アセンダント）',v:RASIS[ascSign],t:RASI_INTERP.lagna[ascSign],b:'linear-gradient(90deg,#c8a84a,#d4783a)'},
+        {i:'☀️',l:'ラーシ（太陽星座）',v:RASIS[sunSign],t:RASI_INTERP.sun[sunSign],b:'linear-gradient(90deg,#d4783a,#f0a030)'},
+        {i:'🌙',l:'チャンドラ・ラーシ（月星座）',v:RASIS[moonSign],t:RASI_INTERP.moon[moonSign],b:'linear-gradient(90deg,#6c5ce7,#a29bfe)'},
+        {i:'⭐',l:'ジャンマ・ナクシャトラ',v:`${nkd.n}（第${nk+1}宿 / 第${pd}パーダ）`,t:`支配星: ${nkd.r} ｜ 神: ${nkd.d} ｜ シンボル: ${nkd.s}`,b:'linear-gradient(90deg,#2cb8a0,#55efc4)'},
+        {i:'♃',l:'木星（グル）の位置',v:RASIS[rasi(pos.jup)],t:RASI_INTERP.jupiter[rasi(pos.jup)],b:'linear-gradient(90deg,#fdcb6e,#e17055)'},
+        {i:'♄',l:'土星（シャニ）の位置',v:RASIS[rasi(pos.sat)],t:RASI_INTERP.saturn[rasi(pos.sat)],b:'linear-gradient(90deg,#636e72,#b2bec3)'}
+      ];
+      document.getElementById('rcard-grid').innerHTML=cards.map((c,i)=>`
+        <div class="rcard" style="animation-delay:${i*.1}s">
+          <div class="rcard-icon">${c.i}</div>
+          <div class="rcard-lbl">${c.l}</div>
+          <div class="rcard-val">${c.v}</div>
+          <div class="rcard-txt">${c.t}</div>
+          <div class="rcard-bar" style="background:${c.b}"></div>
+        </div>`).join('');
+
+      // Nakshatra detail
+      document.getElementById('nk-detail').innerHTML=`
+        <div style="background:rgba(44,184,160,.07);border:1px solid rgba(44,184,160,.2);border-radius:8px;padding:1.2rem">
+          <div style="font-family:'Philosopher',serif;color:#2cb8a0;font-size:.95rem;margin-bottom:.7rem">${nkd.n} ナクシャトラ</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--dim);line-height:1.95">${nkd.q}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:.8rem;margin-top:.9rem">
+            ${['支配惑星:'+nkd.r,'主神:'+nkd.d,'シンボル:'+nkd.s,'第'+pd+'パーダ'].map(x=>`<span style="font-size:.7rem;color:var(--faint)">${x.split(':')[0]}: <span style="color:var(--gold)">${x.split(':')[1]}</span></span>`).join('')}
+          </div>
+        </div>`;
+
+      // Dasha
+      const fmt=dt=>`${dt.getFullYear()}年${dt.getMonth()+1}月`;
+      document.getElementById('dasha-body').innerHTML=das.map(d=>{
+        const cur=today>=d.s&&today<d.e;
+        return`<tr${cur?' class="cur"':''}><td style="color:var(--text);font-weight:500">${d.pl}</td><td>${fmt(d.s)}</td><td>${fmt(d.e)}</td><td>${d.yrs.toFixed(1)}年</td><td>${THEMES[d.pl]}</td></tr>`;
+      }).join('');
+
+      document.getElementById('birth-result').style.display='block';
+      document.getElementById('birth-result').scrollIntoView({behavior:'smooth',block:'start'});
+    }finally{loading(false)}
+  },1600);
+}
+
+/* ══════════════════════════════════════
+   DAILY CALC
+══════════════════════════════════════ */
+const DAILY_MSGS={
+  仕事:{good:['新しい企画が動き出す吉日。積極的な行動が吉。','上司や先輩からの援助が期待できます。','重要な交渉は今日中に進めること。'],fair:['着実に進める日。派手な動きは避けましょう。','書類整理や準備に適した一日。'],bad:['決断は明日に持ち越しましょう。','トラブルに注意。冷静な対応が重要です。']},
+  恋愛:{good:['特別な出会いの予感。積極的に動いて。','パートナーとの絆が深まる一日。','告白・プロポーズに吉の配置です。'],fair:['ゆっくり関係を育む日。焦りは禁物。','友人として接することで信頼が生まれます。'],bad:['感情的になりやすい日。言葉に注意を。','誤解が生じやすい配置。丁寧なコミュニケーションを。']},
+  金運:{good:['投資・財務判断に吉日。チャンスを逃さずに。','思わぬ収入の予感。感謝の気持ちを忘れずに。'],fair:['節制を心がける日。大きな出費は避けましょう。'],bad:['衝動買いに注意。財布の紐を締めて。','貸し借りには慎重に。']},
+  健康:{good:['エネルギーに満ちた日。軽い運動で更に活性化。','体調絶好調。新しい健康習慣を始めるのに最適。'],fair:['休息も大切な日。無理は禁物。','規則正しい生活リズムを心がけて。'],bad:['過労に注意。十分な睡眠をとりましょう。','食事・水分をしっかり摂ること。']}
+};
+
+function calcDaily(){
+  const bd=document.getElementById('d-date').value;
+  if(!bd){alert('生年月日を入力してください');return}
+  loading(true,'今日の星の配置を読み取り中…');
+  setTimeout(()=>{
+    try{
+      const today=new Date();
+      const seed=(today.getDate()+today.getMonth()*31+today.getFullYear()*365);
+      const[y,m,d]=bd.split('-').map(Number);
+      const bseed=(d+m*31+y*365);
+      const combined=(seed+bseed)%1000;
+
+      const categories=['仕事','恋愛','金運','健康'];
+      const catColors=['#c8a84a','#c06878','#2cb8a0','#9b8abf'];
+      const catIcons=['💼','💕','💰','🌿'];
+
+      const scores=categories.map((_,i)=>{
+        const s=((combined*(i+3)+i*77)%100);
+        return Math.max(40,Math.min(100,s));
+      });
+      const overall=Math.round(scores.reduce((a,b)=>a+b,0)/scores.length);
+
+      const stars=n=>{const s=Math.round(n/20);return'★'.repeat(s)+'☆'.repeat(5-s)};
+
+      document.getElementById('d-date-disp').textContent=`${today.getFullYear()}年${today.getMonth()+1}月${today.getDate()}日（${['日','月','火','水','木','金','土'][today.getDay()]}曜日）`;
+      document.getElementById('d-overall').innerHTML=`<span style="color:var(--gold)">${stars(overall)}</span> <span style="color:var(--dim);font-size:.9rem">${overall}点</span>`;
+
+      document.getElementById('daily-grid').innerHTML=categories.map((cat,i)=>{
+        const sc=scores[i];
+        const lvl=sc>=75?'good':sc>=50?'fair':'bad';
+        const msgs=DAILY_MSGS[cat][lvl];
+        const msg=msgs[combined%msgs.length];
+        return`<div class="daily-card" style="animation-delay:${i*.1}s;border-top:2px solid ${catColors[i]}">
+          <div class="daily-planet">${catIcons[i]}</div>
+          <div class="daily-name">${cat}</div>
+          <div class="daily-score" style="color:${catColors[i]}">${sc}点</div>
+          <div class="stars" style="color:${catColors[i]}">${stars(sc)}</div>
+          <div class="daily-txt">${msg}</div>
+        </div>`;
+      }).join('');
+
+      const moonDay=((seed+bseed*2)%27);
+      const nkToday=NK[moonDay];
+      document.getElementById('daily-advice').innerHTML=`
+        本日の月宿は <strong style="color:var(--gold)">${nkToday.n}</strong>（支配星: ${nkToday.r}）。
+        ${nkToday.q}<br><br>
+        <span style="color:var(--dim)">ラッキーカラー: </span>
+        <span style="color:var(--gold)">${['深紅','紺青','金色','エメラルド','白','銀','橙'][combined%7]}</span>　
+        <span style="color:var(--dim)">吉方位: </span>
+        <span style="color:var(--gold)">${['東','南東','南','南西','西','北西','北','北東'][combined%8]}</span>　
+        <span style="color:var(--dim)">開運数字: </span>
+        <span style="color:var(--gold)">${(combined%9)+1}</span>
+      `;
+
+      document.getElementById('daily-result').style.display='block';
+      document.getElementById('daily-result').scrollIntoView({behavior:'smooth',block:'start'});
+    }finally{loading(false)}
+  },1400);
+}
+
+/* ══════════════════════════════════════
+   COMPAT CALC
+══════════════════════════════════════ */
+const KUTA_NAMES=['ヴァルナ（星座）','ヴァシャ（支配）','タラ（月宿）','ヨーニ（本質）','グラハ・ミトラ（惑星友好）','ガナ（性質）','ラーシ（星座相性）','ナーディ（生命力）'];
+const KUTA_MAX=[1,2,3,4,5,6,7,8];
+
+function calcCompat(){
+  const n1=document.getElementById('c1-name').value||'あなた';
+  const n2=document.getElementById('c2-name').value||'お相手';
+  const d1=document.getElementById('c1-date').value;
+  const d2=document.getElementById('c2-date').value;
+  const t1=document.getElementById('c1-time').value||'06:00';
+  const t2=document.getElementById('c2-time').value||'06:00';
+  const cy1=document.getElementById('c1-city').value||'東京';
+  const cy2=document.getElementById('c2-city').value||'東京';
+  if(!d1||!d2){alert('両方の生年月日を入力してください');return}
+  loading(true,'二人の星図を照合中…');
+  setTimeout(()=>{
+    try{
+      const parse=(d,t,c)=>{
+        const[y,m,day]=d.split('-').map(Number);
+        const[hh,mm]=t.split(':').map(Number);
+        const[lat,lon]=cityXY(c);
+        const j=jd(y,m,day)+(hh+mm/60)/24-9/24;
+        return{j,lat,lon,pos:planets(j)};
+      };
+      const p1=parse(d1,t1,cy1),p2=parse(d2,t2,cy2);
+      const nk1=nkIdx(p1.pos.moon),nk2=nkIdx(p2.pos.moon);
+      const rs1=rasi(p1.pos.moon),rs2=rasi(p2.pos.moon);
+
+      // Simplified kuta scoring
+      const seed=(nk1*27+nk2+rs1*12+rs2)*7;
+      const scores=KUTA_NAMES.map((_,i)=>{
+        const max=KUTA_MAX[i];
+        const raw=((seed*(i+2)+i*13)%100)/100;
+        return{name:KUTA_NAMES[i],score:Math.round(raw*max),max};
+      });
+      const total=scores.reduce((a,b)=>a+b.score,0);
+      const maxTotal=scores.reduce((a,b)=>a+b.max,0); // 36
+      const pct=Math.round(total/maxTotal*100);
+
+      const verdict=pct>=80?'最良の縁（ウッタマ）':pct>=65?'良縁（サット）':pct>=50?'普通（マディヤマ）':'要注意（アダマ）';
+      const verdictColor=pct>=80?'#2cb8a0':pct>=65?'#c8a84a':pct>=50?'#9b8abf':'#c06878';
+
+      // Animate ring
+      const arc=document.getElementById('score-arc');
+      const circ=2*Math.PI*48;
+      setTimeout(()=>{arc.style.strokeDashoffset=circ*(1-pct/100)},100);
+      document.getElementById('compat-pct').textContent=pct+'%';
+      document.getElementById('compat-verdict').innerHTML=`<strong style="color:${verdictColor}">${verdict}</strong><br>${n1} & ${n2} のクータ合計: ${total}/${maxTotal}点`;
+
+      document.getElementById('compat-bars').innerHTML=scores.map(s=>`
+        <div class="cbar-row">
+          <div class="cbar-name">${s.name}</div>
+          <div class="cbar-track">
+            <div class="cbar-fill" style="width:${s.score/s.max*100}%;background:linear-gradient(90deg,var(--rose),var(--gold))"></div>
+          </div>
+          <div class="cbar-pct">${s.score}/${s.max}</div>
+        </div>`).join('');
+
+      const nkd1=NK[nk1],nkd2=NK[nk2];
+      document.getElementById('compat-detail').innerHTML=`
+        <strong style="color:var(--gold)">${n1}</strong> さんの月宿は <strong style="color:var(--teal)">${nkd1.n}</strong>（${nkd1.r}支配）、
+        <strong style="color:var(--gold)">${n2}</strong> さんの月宿は <strong style="color:var(--lilac)">${nkd2.n}</strong>（${nkd2.r}支配）です。<br><br>
+        ${pct>=75
+          ? `両者のナクシャトラは自然な調和を持ち、日常のリズムが合いやすいでしょう。精神的なつながりも強く、互いの成長を支え合える関係です。`
+          : pct>=55
+          ? `お互いの違いを認め合うことで成長できる関係。意識的なコミュニケーションを心がければ、良いパートナーシップが築けます。`
+          : `異なるエネルギーを持つ二人。短期的な引き合いはあるものの、長期的な関係には意識的な努力と相互理解が必要です。詳細な鑑定を推奨します。`
+        }`;
+
+      document.getElementById('compat-result').style.display='block';
+      document.getElementById('compat-result').scrollIntoView({behavior:'smooth',block:'start'});
+    }finally{loading(false)}
+  },1800);
+}
+
+
+/* ── LOADING ── */
+function loading(on,txt=''){
+  const el=document.getElementById('loading');
+  el.classList.toggle('on',on);
+  if(txt)document.getElementById('loadTxt').textContent=txt;
+}
+</script>
+</body>
+</html>
