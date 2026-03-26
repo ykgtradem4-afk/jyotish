@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お問い合わせ | ジョーティシュ — ヴェーダ占星術</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Philosopher:wght@400;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#08060f;--surface:#110e1c;--card:#181426;--border:#2c2342;
+  --gold:#c8a84a;--gold2:#f0d080;--gold3:#7a5e20;--amber:#d4783a;
+  --text:#ede4d4;--dim:#8a7d6a;--faint:#46403a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--ink);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-weight:300;line-height:1.8;}
+nav{background:rgba(8,6,15,.95);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;position:sticky;top:0;z-index:100;}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--gold);text-decoration:none;}
+.nav-back{font-size:.75rem;color:var(--dim);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--gold);}
+.container{max-width:640px;margin:0 auto;padding:3rem 1.5rem 5rem;}
+.page-title{font-family:'Philosopher',serif;font-size:1.8rem;font-weight:700;color:var(--gold);margin-bottom:.5rem;}
+.page-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--dim);margin-bottom:2.5rem;line-height:1.8;}
+.contact-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:2.5rem;
+  position:relative;overflow:hidden;
+}
+.contact-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--amber));
+}
+.contact-method{margin-bottom:2rem;}
+.method-label{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold3);margin-bottom:.5rem;}
+.method-value{
+  font-family:'Cormorant Garamond',serif;font-size:1.2rem;
+  color:var(--gold2);word-break:break-all;
+}
+.method-note{font-size:.78rem;color:var(--dim);margin-top:.4rem;line-height:1.7;}
+.divider{border:none;border-top:1px solid var(--border);margin:1.5rem 0;}
+.reply-note{
+  background:rgba(200,168,74,.06);border:1px solid rgba(200,168,74,.2);
+  border-radius:8px;padding:1rem 1.2rem;
+}
+.reply-note p{font-size:.82rem;color:var(--dim);line-height:1.8;margin:0;}
+.reply-note strong{color:var(--gold);}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;color:var(--gold);margin-bottom:1rem;margin-top:2rem;}
+.faq-item{margin-bottom:1.2rem;}
+.faq-q{font-size:.85rem;color:var(--text);margin-bottom:.3rem;font-weight:500;}
+.faq-q::before{content:'Q. ';color:var(--gold);}
+.faq-a{font-size:.82rem;color:var(--dim);line-height:1.8;padding-left:1.2rem;}
+.faq-a::before{content:'A. ';color:var(--amber);}
+a{color:var(--gold);text-decoration:none;}
+a:hover{text-decoration:underline;}
+footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;}
+.footer-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem;}
+.footer-links a{font-size:.7rem;color:var(--faint);text-decoration:none;letter-spacing:.07em;text-transform:uppercase;transition:color .2s;}
+.footer-links a:hover{color:var(--gold);}
+.footer-note{font-size:.7rem;color:var(--faint);}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="index.html">✦ Jyotiṣa</a>
+  <a class="nav-back" href="index.html">← トップに戻る</a>
+</nav>
+<div class="container">
+  <div class="page-title">お問い合わせ</div>
+  <div class="page-sub">ご質問・ご意見・不具合のご報告などはメールにてお気軽にどうぞ。</div>
+
+  <div class="contact-card">
+    <div class="contact-method">
+      <div class="method-label">メールアドレス</div>
+      <div class="method-value">
+        <a href="mailto:qqxr5xm9k@eos.ocn.ne.jp">qqxr5xm9k@eos.ocn.ne.jp</a>
+      </div>
+      <div class="method-note">上記アドレスにメールをお送りください。</div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="reply-note">
+      <p>
+        <strong>返信について：</strong>通常3〜5営業日以内にご返信いたします。
+        お問い合わせ内容によってはお時間をいただく場合がございます。
+        また、内容によってはご返信できない場合もございますのでご了承ください。
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">よくあるご質問</div>
+
+  <div class="faq-item">
+    <div class="faq-q">占い結果が正しくない気がします</div>
+    <div class="faq-a">出生時刻や出生地を正確に入力いただくと精度が上がります。また、当サイトの計算はデモ用のアルゴリズムによるものです。より精密な鑑定をご希望の場合は、詳細鑑定レポートをご検討ください。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">入力した個人情報はどこかに保存されますか？</div>
+    <div class="faq-a">いいえ、入力されたデータはすべてお使いのブラウザ上でのみ処理されます。当サイトのサーバーには一切保存されません。詳しくは<a href="privacy.html">プライバシーポリシー</a>をご覧ください。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">サイトが正しく表示されません</div>
+    <div class="faq-a">お使いのブラウザを最新版に更新するか、Chrome・Safariなど別のブラウザでお試しください。それでも解決しない場合はお問い合わせください。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">広告・アフィリエイトについて</div>
+    <div class="faq-a">当サイトはGoogle AdSense・Amazonアソシエイト・A8.netなどの広告・アフィリエイトを利用しています。詳しくは<a href="privacy.html">プライバシーポリシー</a>をご覧ください。</div>
+  </div>
+</div>
+<footer>
+  <div class="footer-links">
+    <a href="index.html">トップ</a>
+    <a href="privacy.html">プライバシーポリシー</a>
+    <a href="terms.html">利用規約</a>
+    <a href="contact.html">お問い合わせ</a>
+  </div>
+  <div class="footer-note">© 2026 ムーンアンドサン工房</div>
+</footer>
+</body>
+</html>
