@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ジョーティシュ | 古代インド占星術 — 無料鑑定</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta name="description" content="5000年の叡智、ヴェーダ占星術（ジョーティシュ）で本格無料鑑定。出生ホロスコープ・今日の運勢・相性占い。27ナクシャトラ、ダシャー周期を詳細分析。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Philosopher:ital,wght@0,400;0,700;1,400&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
@@ -158,7 +159,56 @@ nav{
   padding:0 .2rem;
 }
 
-/* ── MAIN TABS ── */
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;
+  padding:4.5rem 1.5rem 3rem;
+  text-align:center;
+  overflow:hidden;
+  background:
+    linear-gradient(160deg,rgba(60,15,35,.5) 0%,rgba(40,8,25,.42) 50%,rgba(60,20,15,.46) 100%),
+    url('hero.png') center center / cover no-repeat;
+  min-height:320px;
+}
+.hero::before{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(0,0,0,.08) 0%,rgba(0,0,0,.38) 100%);
+  pointer-events:none;
+}
+.hero-kicker{
+  position:relative;
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:.95rem;
+  color:rgba(255,220,235,1);letter-spacing:.35em;text-transform:uppercase;
+  margin-bottom:1.2rem;
+  text-shadow:0 1px 12px rgba(0,0,0,.8),0 0 30px rgba(0,0,0,.6);
+}
+.hero h1{
+  position:relative;
+  font-family:'Philosopher',serif;
+  font-size:clamp(2rem,5.5vw,4rem);
+  font-weight:700;line-height:1.15;
+  color:#fff;
+  -webkit-text-fill-color:#fff;
+  margin-bottom:1rem;
+  text-shadow:0 2px 20px rgba(0,0,0,.9),0 0 40px rgba(0,0,0,.7),0 4px 8px rgba(0,0,0,.6);
+}
+.hero-sub{
+  position:relative;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem;color:rgba(255,228,235,.96);
+  max-width:520px;margin:0 auto 2rem;line-height:1.85;
+  text-shadow:0 1px 10px rgba(0,0,0,.8),0 2px 4px rgba(0,0,0,.6);
+}
+.hero-pills{position:relative;display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
+.pill{
+  font-size:.72rem;letter-spacing:.08em;
+  color:rgba(255,205,220,.9);
+  padding:.1rem 0;cursor:default;
+  text-shadow:0 1px 4px rgba(0,0,0,.6);
+}
+.pill-sep{font-size:.72rem;color:rgba(255,180,200,.4);padding:0 .2rem}
 .main-tabs{
   position:relative;z-index:1;
   display:flex;border-bottom:2px solid var(--border);
@@ -488,11 +538,51 @@ footer{
 
 /* ── RESPONSIVE ── */
 @media(max-width:700px){
+  nav{padding:0 .75rem}
+  .nav-brand span{display:none}
+  .nav-tabs{gap:.1rem}
+  .tab-btn{font-size:.68rem;padding:.35rem .55rem}
+
+  .hero{padding:2.8rem .9rem 2.2rem;min-height:240px}
+  .hero h1{font-size:1.75rem}
+  .hero-sub{font-size:.95rem}
+  .hero-kicker{font-size:.78rem;letter-spacing:.18em}
+  .pill{font-size:.63rem}
+
   .layout{grid-template-columns:1fr}
   .sidebar{display:none}
-  .main-tabs{padding:0 .75rem}
-  .container{padding:1.5rem .75rem}
-  .card{padding:1.3rem}
+  .main-tabs{padding:0 .4rem;-webkit-overflow-scrolling:touch}
+  .main-tab{font-size:.72rem;padding:.7rem .75rem}
+  .tab-icon{display:none}
+  .container{padding:1.2rem .75rem}
+  .card{padding:1.2rem}
+
+  .form-grid{grid-template-columns:1fr}
+  .rcard-grid{grid-template-columns:1fr}
+  .rcard{padding:1rem}
+
+  .daily-grid{grid-template-columns:1fr 1fr}
+
+  .compat-result{padding:1.2rem}
+  .cbar-row{grid-template-columns:65px 1fr 28px}
+  .cbar-name{font-size:.63rem}
+
+  .tbl{font-size:.7rem}
+  .tbl th,.tbl td{padding:.38rem .35rem}
+
+  .aff-grid{grid-template-columns:1fr}
+  .amz-grid{grid-template-columns:1fr}
+
+  .feat-grid{grid-template-columns:1fr 1fr}
+
+  .footer-links{gap:.75rem}
+  footer{padding:1.5rem .9rem}
+}
+@media(max-width:400px){
+  .hero h1{font-size:1.45rem}
+  .daily-grid{grid-template-columns:1fr}
+  .feat-grid{grid-template-columns:1fr}
+  .main-tab{font-size:.66rem;padding:.62rem .5rem}
 }
 </style>
 </head>

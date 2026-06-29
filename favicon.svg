@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- 背景円 -->
+  <circle cx="32" cy="32" r="32" fill="#fff0f5"/>
+  
+  <!-- 葉（左） -->
+  <ellipse cx="18" cy="44" rx="10" ry="5" fill="#a8d8b0" transform="rotate(-30 18 44)"/>
+  <!-- 葉（右） -->
+  <ellipse cx="46" cy="44" rx="10" ry="5" fill="#a8d8b0" transform="rotate(30 46 44)"/>
+  
+  <!-- 水面 -->
+  <ellipse cx="32" cy="48" rx="20" ry="5" fill="#f0c0d0" opacity="0.4"/>
+
+  <!-- 花びら（後ろ・外側） -->
+  <ellipse cx="32" cy="30" rx="7" ry="16" fill="#f8c0d0" transform="rotate(-30 32 30)" opacity="0.85"/>
+  <ellipse cx="32" cy="30" rx="7" ry="16" fill="#f8c0d0" transform="rotate(30 32 30)" opacity="0.85"/>
+  <ellipse cx="32" cy="30" rx="7" ry="16" fill="#f8b8cc" transform="rotate(-60 32 30)" opacity="0.7"/>
+  <ellipse cx="32" cy="30" rx="7" ry="16" fill="#f8b8cc" transform="rotate(60 32 30)" opacity="0.7"/>
+
+  <!-- 花びら（前・内側） -->
+  <ellipse cx="32" cy="32" rx="6" ry="14" fill="#f9d0e0" transform="rotate(-15 32 32)"/>
+  <ellipse cx="32" cy="32" rx="6" ry="14" fill="#f9d0e0" transform="rotate(15 32 32)"/>
+  <ellipse cx="32" cy="28" rx="5.5" ry="13" fill="#fde0ec"/>
+
+  <!-- 花芯 -->
+  <circle cx="32" cy="28" r="7" fill="#f8c060"/>
+  <circle cx="32" cy="28" r="4.5" fill="#f0a840"/>
+  <circle cx="32" cy="28" r="2.5" fill="#e89030"/>
+
+  <!-- 花芯の小粒 -->
+  <circle cx="30" cy="26" r="1" fill="#ffd080"/>
+  <circle cx="34" cy="26" r="1" fill="#ffd080"/>
+  <circle cx="32" cy="24.5" r="1" fill="#ffd080"/>
+  <circle cx="29.5" cy="29" r="0.8" fill="#ffd080"/>
+  <circle cx="34.5" cy="29" r="0.8" fill="#ffd080"/>
+</svg>
