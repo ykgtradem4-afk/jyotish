@@ -4,35 +4,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>利用規約 | ジョーティシュ — ヴェーダ占星術</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Philosopher:wght@400;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{
-  --ink:#08060f;--surface:#110e1c;--card:#181426;--border:#2c2342;
-  --gold:#c8a84a;--gold2:#f0d080;--gold3:#7a5e20;--amber:#d4783a;
-  --text:#ede4d4;--dim:#8a7d6a;--faint:#46403a;
-}
+:root{--cream:#fff8f9;--card:#fff5f8;--border:#f0c0cc;--gold:#c0607a;--amber:#d4783a;--text:#3a1828;--dim:#8a5060;--faint:#c090a0;--lilac:#d090b0;}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--ink);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-weight:300;line-height:1.8;}
-nav{background:rgba(8,6,15,.95);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;position:sticky;top:0;z-index:100;}
+body{background:var(--cream);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-weight:300;line-height:1.8;min-height:100vh;}
+nav{background:rgba(255,240,243,.96);backdrop-filter:blur(16px);border-bottom:2px solid var(--border);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(192,96,122,.1);}
 .nav-brand{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--gold);text-decoration:none;}
-.nav-back{font-size:.75rem;color:var(--dim);text-decoration:none;transition:color .2s;}
-.nav-back:hover{color:var(--gold);}
-.container{max-width:760px;margin:0 auto;padding:3rem 1.5rem 5rem;}
-.page-title{font-family:'Philosopher',serif;font-size:1.8rem;font-weight:700;color:var(--gold);margin-bottom:.4rem;}
-.page-date{font-size:.75rem;color:var(--faint);margin-bottom:2.5rem;}
-.section{margin-bottom:2.5rem;}
-h2{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--gold);margin-bottom:.8rem;padding-bottom:.4rem;border-bottom:1px solid var(--border);}
-p{font-size:.88rem;color:var(--dim);margin-bottom:.9rem;line-height:1.9;}
-ul{padding-left:1.2rem;margin-bottom:.9rem;}
-li{font-size:.88rem;color:var(--dim);margin-bottom:.4rem;line-height:1.8;}
-a{color:var(--gold);text-decoration:none;}
-a:hover{text-decoration:underline;}
-footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;}
-.footer-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem;}
-.footer-links a{font-size:.7rem;color:var(--faint);text-decoration:none;letter-spacing:.07em;text-transform:uppercase;transition:color .2s;}
+.nav-back{font-size:.75rem;color:var(--dim);text-decoration:none;border:1px solid var(--border);padding:.3rem .8rem;border-radius:2rem;transition:color .2s,border-color .2s;}
+.nav-back:hover{color:var(--gold);border-color:var(--gold);}
+.page-hero{background:linear-gradient(160deg,rgba(60,15,35,.48) 0%,rgba(40,8,25,.4) 50%,rgba(60,20,15,.44) 100%),url('hero.png') center 30% / cover no-repeat;padding:2.5rem 1.5rem 2rem;text-align:center;position:relative;overflow:hidden;}
+.page-hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,.05) 0%,rgba(0,0,0,.32) 100%);pointer-events:none;}
+.page-hero-title{position:relative;font-family:'Philosopher',serif;font-size:1.9rem;font-weight:700;color:#fff;text-shadow:0 2px 16px rgba(0,0,0,.85),0 4px 8px rgba(0,0,0,.6);}
+.page-hero-sub{position:relative;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem;color:rgba(255,220,235,.92);letter-spacing:.2em;margin-top:.4rem;text-shadow:0 1px 8px rgba(0,0,0,.7);}
+.container{max-width:760px;margin:0 auto;padding:2.5rem 1.5rem 5rem;}
+.section{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.8rem;margin-bottom:1.2rem;box-shadow:0 2px 12px rgba(192,96,122,.07);position:relative;overflow:hidden;}
+.section::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--amber));}
+h2{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;color:var(--gold);margin-bottom:.8rem;padding-bottom:.45rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.5rem;}
+h2::before{content:'✦';font-size:.7rem;color:var(--lilac)}
+p{font-size:.86rem;color:var(--dim);margin-bottom:.8rem;line-height:1.95;}
+p:last-child{margin-bottom:0}
+ul{padding-left:1.1rem;margin-bottom:.8rem;}
+li{font-size:.86rem;color:var(--dim);margin-bottom:.45rem;line-height:1.85;}
+li::marker{color:var(--gold)}
+a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(192,96,122,.25);transition:border-color .2s;}
+a:hover{border-bottom-color:var(--gold);}
+footer{background:linear-gradient(160deg,#ffe8f0 0%,#fff0f5 100%);border-top:2px solid var(--border);padding:2rem 1.5rem;text-align:center;}
+.footer-logo{font-family:'Philosopher',serif;font-size:1rem;color:var(--gold);margin-bottom:.8rem;}
+.footer-links{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;margin-bottom:.8rem;}
+.footer-links a{font-size:.68rem;color:var(--faint);text-decoration:none;letter-spacing:.07em;text-transform:uppercase;border-bottom:none;transition:color .2s;}
 .footer-links a:hover{color:var(--gold);}
-.footer-note{font-size:.7rem;color:var(--faint);}
+.footer-note{font-size:.68rem;color:var(--faint);}
+@media(max-width:600px){nav{padding:0 .75rem}.page-hero{padding:2rem 1rem 1.6rem}.page-hero-title{font-size:1.5rem}.container{padding:1.5rem .75rem 4rem}.section{padding:1.3rem}}
 </style>
 </head>
 <body>
@@ -40,15 +45,16 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem
   <a class="nav-brand" href="index.html">✦ Jyotiṣa</a>
   <a class="nav-back" href="index.html">← トップに戻る</a>
 </nav>
+<div class="page-hero">
+  <div class="page-hero-title">利用規約</div>
+  <div class="page-hero-sub">Terms of Service</div>
+</div>
 <div class="container">
-  <div class="page-title">利用規約</div>
-  <div class="page-date">制定日：2026年3月　運営：ムーンアンドサン工房</div>
-
   <div class="section">
     <h2>第1条（適用）</h2>
     <p>本規約は、ムーンアンドサン工房（以下「当サイト」）が提供するヴェーダ占星術鑑定サービス（以下「本サービス」）の利用に関する条件を定めるものです。ユーザーは本規約に同意のうえ、本サービスをご利用ください。</p>
+    <p style="font-size:.75rem;color:var(--faint)">制定日：2026年3月　運営：ムーンアンドサン工房</p>
   </div>
-
   <div class="section">
     <h2>第2条（サービスの内容）</h2>
     <p>本サービスは、インドの伝統的な占星術（ジョーティシュ）に基づく無料の占い鑑定を提供します。提供するコンテンツは以下の通りです。</p>
@@ -58,7 +64,6 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem
       <li>相性占い（クータ法）</li>
     </ul>
   </div>
-
   <div class="section">
     <h2>第3条（免責事項）</h2>
     <p>本サービスの鑑定結果はエンターテインメントおよび参考情報として提供されるものです。以下の点についてご了承ください。</p>
@@ -69,7 +74,6 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem
       <li>占星術計算はデモ用アルゴリズムによるものであり、完全な精度を保証するものではありません</li>
     </ul>
   </div>
-
   <div class="section">
     <h2>第4条（禁止事項）</h2>
     <p>ユーザーは本サービスの利用にあたり、以下の行為を行ってはなりません。</p>
@@ -79,28 +83,25 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem
       <li>その他、当サイトが不適切と判断する行為</li>
     </ul>
   </div>
-
   <div class="section">
     <h2>第5条（広告・アフィリエイトについて）</h2>
     <p>当サイトはGoogle AdSense、Amazonアソシエイト、A8.netなどの広告・アフィリエイトサービスを利用しています。これらのリンクからの購入・申込により、当サイトが報酬を受け取る場合があります。</p>
   </div>
-
   <div class="section">
     <h2>第6条（サービスの変更・停止）</h2>
     <p>当サイトは、事前の通知なくサービスの内容を変更・停止することがあります。これによってユーザーに生じた損害について、当サイトは責任を負いません。</p>
   </div>
-
   <div class="section">
     <h2>第7条（準拠法）</h2>
     <p>本規約の解釈および適用は、日本法に準拠するものとします。</p>
   </div>
-
   <div class="section">
     <h2>第8条（お問い合わせ）</h2>
     <p>本規約に関するお問い合わせは、<a href="contact.html">お問い合わせページ</a>よりご連絡ください。</p>
   </div>
 </div>
 <footer>
+  <div class="footer-logo">✦ Jyotiṣa — ジョーティシュ占星術</div>
   <div class="footer-links">
     <a href="index.html">トップ</a>
     <a href="privacy.html">プライバシーポリシー</a>
